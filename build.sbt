@@ -21,8 +21,8 @@ lazy val app = (project in file(".")).
   settings(commonSettings: _*).
   settings(
     name := "hello",
-    libraryDependencies += sparkConnector,
     libraryDependencies ++= spark,
+    libraryDependencies += sparkConnector,
     libraryDependencies += sparkSql,
     libraryDependencies += cassandraThrift,
     libraryDependencies += cassandraClientUtil,
@@ -49,3 +49,5 @@ assemblyMergeStrategy in assembly := {
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
 }
+
+assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
