@@ -12,11 +12,8 @@ object sparkTask {
 
     val conf = new SparkConf(true)
       .set("spark.cassandra.connection.host", "127.0.0.1")
-//      .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/out/artifacts/hello_jar/hello.jar"))
+      .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/target/scala-2.11/hello-assembly-1.0.jar"))
     val sc = new SparkContext("spark://127.0.0.1:7077", "test", conf)
-//    sc.addJar("/home/scott/.ivy2/cache/com.datastax.spark/spark-cassandra-connector_2.11/jars/spark-cassandra-connector_2.11-1.6.0.jar")
-//    sc.addJar("/home/scott/.ivy2/cache/com.datastax.cassandra/cassandra-driver-core/jars/cassandra-driver-core-3.0.2.jar")
-//    sc.addJar("/home/scott/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.3.jar")
     val rdd = sc.cassandraTable("test", "kv")
     println(rdd.count)
     println(rdd.first)

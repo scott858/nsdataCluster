@@ -1,8 +1,12 @@
 <component name="ProjectDictionaryState">
   <dictionary name="scott">
     <words>
+      <w>beanutils</w>
       <w>clientutil</w>
       <w>datastax</w>
+      <w>esotericsoftware</w>
+      <w>minlog</w>
+      <w>mortbay</w>
     </words>
   </dictionary>
 </component>
