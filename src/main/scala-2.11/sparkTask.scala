@@ -19,7 +19,119 @@ object sparkTask {
       .set("spark.cassandra.connection.host", "172.17.0.2")
       .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/target/scala-2.11/hello-assembly-1.0.jar"))
     val sc = new SparkContext("spark://172.17.0.2:7077", "test", conf)
-    usePairReduceByKey(sc)
+    optimalRepartition(sc)
+  }
+
+  def optimalRepartition(sc: SparkContext): Unit = {
+    val movies = sc.cassandraTable("killr_video", "videos")
+      .keyBy(row => row.getString("release_date"))
+      .partitionBy(
+        new org.apache.spark.HashPartitioner(2 * sc.defaultParallelism)
+      )
+      .cache
+
+    val movieCountByYear = movies.countByKey.foreach(println)
+
+    val moviesByYear = movies.groupByKey.collect.foreach(println)
+  }
+
+  def repartitioning(sc: SparkContext): Unit = {
+    println(sc.defaultParallelism)
+
+    val movies = sc.parallelize(List(
+      ("Alice in Wonderland", 2016),
+      ("Alice Through the Looking Glass", 2010)
+    ))
+    println(movies.partitions.size)
+
+    println(movies.repartition(2 * sc.defaultParallelism).partitions.size)
+
+    println(movies.coalesce(1).partitions.size)
+
+
+    //for sorting use range partitioner
+    val movies2 = sc.parallelize(List(
+      ("Alice in Wonderland", 2016),
+      ("Alice Through the Looking Glass", 2010)
+    ))
+      .partitionBy(new org.apache.spark.HashPartitioner(9))
+    println(movies2.partitioner)
+
+  }
+
+  def partitions(sc: SparkContext): Unit = {
+    val videos = sc.parallelize(List(
+      ("Alice in Wonderland", 2016),
+      ("Alice Through the Looking Glass", 2010)
+    ))
+    println(videos.partitions.size)
+
+    val videos2 = sc.cassandraTable("killr_video", "videos")
+    println(videos2.partitions.size)
+    println(videos2.partitioner)
+  }
+
+  def setBasedIntegrity(sc: SparkContext): Unit = {
+    val ratings = sc.cassandraTable("killr_video", "ratings_by_video")
+      .keyBy(row => row.getUUID("video_id"))
+
+    val movies = sc.cassandraTable("killr_video", "videos")
+      .select("video_id")
+      .keyBy(row => row.getUUID("video_id"))
+
+    ratings.subtractByKey(movies)
+      .collect
+      .foreach(println)
+  }
+
+  def useSets(sc: SparkContext): Unit = {
+    val A = sc.parallelize(Array(("k1", "v1"), ("k2", "v2"), ("k3", "v3"), ("k4", "v4")))
+    val B = sc.parallelize(Array(("k1", "w1"), ("k2", "w2"), ("k3", "w3"), ("k4", "w4")))
+
+    A.union(B)
+      .collect
+      .foreach(println)
+
+    A.groupByKey
+      .join(B.groupByKey)
+      .flatMapValues { case (aList, bList) => aList ++ bList }
+      .collect
+      .foreach(println)
+  }
+
+  def referentialIntegrity(sc: SparkContext): Unit = {
+    // Also see Joins: join, leftOuterJoin ...
+    val playlists = sc.cassandraTable("killr_video", "playlists_by_user")
+      .keyBy(row => row.getUUID("movie_id"))
+
+    val movies = sc.cassandraTable("killr_video", "movies")
+      .select("movie_id")
+      .keyBy(row => row.getUUID("movie_id"))
+
+    playlists.leftOuterJoin(movies)
+      .filter { case (m, (rowP, rowM)) => !rowM.isDefined }
+      .map { case (m, (rowP, rowM)) => rowP }
+      .collect
+      .foreach(println)
+
+  }
+
+  def schemaEvolution(sc: SparkContext): Unit = {
+
+    val playlists = sc.cassandraTable("killr_video", "playlists_by_user")
+      .select("user_id", "playlist_name", "release_year", "title", "movie_id")
+      .as((u: java.util.UUID, p: String, y: Int, t: String, m: java.util.UUID) =>
+        (m, (u, p, y, t)))
+
+    val movies = sc.cassandraTable("killr_video", "movies")
+      .select("movie_id", "genres", "rating")
+      .as((m: java.util.UUID, g: Set[String], r: Option[Float]) =>
+        (m, (g, r)))
+
+    playlists.join(movies)
+      .map { case (m, ((u, p, y, t), (g, r))) => (u, p, y, t, m, g, r) }
+      .saveToCassandra("killr_video", "playlists_by_user")
+
   }
 
   def usePairCombineByKey(sc: SparkContext): Unit = {
