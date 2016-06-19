@@ -6,7 +6,7 @@ val spark = Seq(
     .exclude("commons-logging", "commons-logging")
     .exclude("com.esotericsoftware.minlog", "minlog")
 )
-val sparkSql = "org.apache.spark" %% "spark-sql" % "1.6.1" intransitive()
+val sparkSql = "org.apache.spark" %% "spark-sql" % "1.6.1" //intransitive()
 val cassandraThrift = "org.apache.cassandra" % "cassandra-thrift" % "3.5" intransitive()
 val cassandraClientUtil = "org.apache.cassandra" % "cassandra-clientutil" % "3.5" intransitive()
 val cassandraCore = "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.2" intransitive()
