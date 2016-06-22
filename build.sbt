@@ -7,6 +7,7 @@ val spark = Seq(
     .exclude("com.esotericsoftware.minlog", "minlog")
 )
 val sparkSql = "org.apache.spark" %% "spark-sql" % "1.6.1" //intransitive()
+val sparkStreaming = "org.apache.spark" % "spark-streaming_2.11" % "1.6.1" //intransitive()
 val cassandraThrift = "org.apache.cassandra" % "cassandra-thrift" % "3.5" intransitive()
 val cassandraClientUtil = "org.apache.cassandra" % "cassandra-clientutil" % "3.5" intransitive()
 val cassandraCore = "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.2" intransitive()
@@ -24,6 +25,7 @@ lazy val app = (project in file(".")).
     libraryDependencies ++= spark,
     libraryDependencies += sparkConnector,
     libraryDependencies += sparkSql,
+    libraryDependencies += sparkStreaming,
     libraryDependencies += cassandraThrift,
     libraryDependencies += cassandraClientUtil,
     libraryDependencies += cassandraCore

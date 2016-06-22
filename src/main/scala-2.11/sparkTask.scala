@@ -2,10 +2,14 @@
   * Created by scott on 6/12/16.
   */
 
-import org.apache.spark.SparkContext
+import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.SparkContext._
-import org.apache.spark.SparkConf
+
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.StreamingContext._
+
 import com.datastax.spark.connector._
+import com.datastax.spark.connector.streaming._
 
 object sparkTask {
 
@@ -16,10 +20,25 @@ object sparkTask {
   def main(args: Array[String]) = {
 
     val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://172.17.0.2:7077")
       .set("spark.cassandra.connection.host", "172.17.0.2")
+      .set("spark.cleaner.ttl", "3600")
       .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/target/scala-2.11/hello-assembly-1.0.jar"))
-    val sc = new SparkContext("spark://172.17.0.2:7077", "test", conf)
-    optimalRepartition(sc)
+    val sc = new SparkContext(conf)
+    streamingPackets(sc)
+  }
+
+  def streamingPackets(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+    stream.flatMap(record => record.split(" "))
+      .map(word => (word, 1))
+      .reduceByKey(_ + _)
+      .print()
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   def optimalRepartition(sc: SparkContext): Unit = {
