@@ -2,12 +2,12 @@
   * Created by scott on 6/12/16.
   */
 
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.SparkContext._
+import java.util.UUID
 
+import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
+import org.apache.spark.SparkContext._
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.StreamingContext._
-
 import com.datastax.spark.connector._
 import com.datastax.spark.connector.streaming._
 
@@ -26,7 +26,47 @@ object sparkTask {
       .set("spark.cleaner.ttl", "3600")
       .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/target/scala-2.11/hello-assembly-1.0.jar"))
     val sc = new SparkContext(conf)
-    streamingPackets(sc)
+    streamJoinStream(sc)
+  }
+
+  def saveStreamToCassandra(sc: SparkContext, conf: SparkConf): Unit = {
+    val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "killr_video.clicks_by_movie ( " +
+        "video_id UUID, " +
+        "click_id TIMEUUID, " +
+        "primary key(video_id,click_id));")
+    }
+
+    val ssc = new StreamingContext(conf, Seconds(4))
+    val stream = ssc.socketTextStream("192.168.00.4", 9999)
+    stream.map(m => (java.util.UUID.fromString(m),
+      com.datastax.driver.core.utils.UUIDs.timeBased()))
+      .saveToCassandra("killr_video", "clicks_by_movie",
+        SomeColumns("video_id", "click_id"))
+
+    //see also foreachRDD
+  }
+
+  def statefulStreaming(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+
+    def updateMovieCount(newValues: Seq[Long], oldCount: Option[Long]): Option[Long] = {
+      if (newValues.isEmpty) Some(oldCount.getOrElse(0L))
+      else Some(oldCount.getOrElse(0L) + newValues(0))
+    }
+
+    stream.countByValue()
+      .updateStateByKey[Long](updateMovieCount _)
+      .print
+
+    ssc.checkpoint("/home")
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   def streamingPackets(sc: SparkContext): Unit = {
@@ -35,6 +75,38 @@ object sparkTask {
     stream.flatMap(record => record.split(" "))
       .map(word => (word, 1))
       .reduceByKey(_ + _)
+      .print()
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def streamJoinStream(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream1 = ssc.socketTextStream("192.168.0.4", 9999)
+    val stream2 = ssc.socketTextStream("192.168.0.4", 9998)
+
+    stream1.countByValue()
+      .join(stream2.countByValue())
+      .mapValues { case (v1, v2) => v1 + v2 }
+      .print
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def streamingJoinToTable(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+      .countByValue()
+
+    val movies = ssc.cassandraTable("killrvideo", "videos")
+      .select("video_id", "title", "release_year")
+      .as((id: UUID, t: String, y: Int) => (id.toString(), (t, y)))
+      .partitionBy(new HashPartitioner(2 * ssc.sparkContext.defaultParallelism))
+      .cache
+
+    stream.transform(rdd => rdd.join(movies).map { case (id, (c, (t, y))) => (id, t, y, c) })
       .print()
 
     ssc.start()
