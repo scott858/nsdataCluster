@@ -13,7 +13,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
 
 if __name__ == '__main__':
-    HOST, PORT = '192.168.0.4', 9998
+    HOST, PORT = '192.168.1.16', 9999
 
     with closing(socketserver.TCPServer((HOST, PORT), MyTCPHandler)) as server:
         server.serve_forever()

@@ -8,8 +8,11 @@ import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 import org.apache.spark.SparkContext._
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.StreamingContext._
+import org.apache.spark.storage.StorageLevel
 import com.datastax.spark.connector._
 import com.datastax.spark.connector.streaming._
+import com.redislabs.provider.redis._
+import java.nio.ByteBuffer
 
 object sparkTask {
 
@@ -24,9 +27,55 @@ object sparkTask {
       .setMaster("spark://172.17.0.2:7077")
       .set("spark.cassandra.connection.host", "172.17.0.2")
       .set("spark.cleaner.ttl", "3600")
-      .setJars(Seq("/home/scott/IdeaProjects/sparkCassandra/target/scala-2.11/hello-assembly-1.0.jar"))
+      .set("redis.host", "172.17.0.3")
+      .set("redis.port", "7379")
+      .setJars(Seq("/home/scott/repos/code/sparkCassandra/" +
+        "target/scala-2.11/sparkCassandra-assembly-1.0.jar"))
     val sc = new SparkContext(conf)
-    streamJoinStream(sc)
+    redisStream(sc)
+  }
+
+  def redisStream(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val redisStream = ssc.createRedisStreamWithoutListname(Array("device-log"),
+      storageLevel = StorageLevel.MEMORY_AND_DISK_SER_2)
+
+    val replaceThis = """[\]]|[\[]|[u]|[\']"""
+    redisStream.map(record =>
+      record.replaceAll(replaceThis, "")
+        .split(",")
+        .map(_.trim))
+      .map { case Array(u, t, p) => (u, t, parseRawPacket(p)) }
+      .print
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def parseRawPacket(packet: String): (Int, Float, Int) = {
+    val rawPacketArray = packet.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte)
+
+    val dataArray = rawPacketArray.slice(5, 9).reverse
+    val dataValue = ByteBuffer.wrap(dataArray).getFloat
+
+    val register = rawPacketArray(4)
+    val crc = rawPacketArray(9) & 0xFF
+
+    (register, dataValue, crc)
+  }
+
+  def streamJoinStream(sc: SparkContext): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream1 = ssc.socketTextStream("192.168.1.16", 9999)
+    val stream2 = ssc.socketTextStream("192.168.1.16", 9998)
+
+    stream1.countByValue()
+      .join(stream2.countByValue())
+      .mapValues { case (v1, v2) => v1 + v2 }
+      .print
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   def saveStreamToCassandra(sc: SparkContext, conf: SparkConf): Unit = {
@@ -41,7 +90,7 @@ object sparkTask {
     }
 
     val ssc = new StreamingContext(conf, Seconds(4))
-    val stream = ssc.socketTextStream("192.168.00.4", 9999)
+    val stream = ssc.socketTextStream("192.168.0.4", 9999)
     stream.map(m => (java.util.UUID.fromString(m),
       com.datastax.driver.core.utils.UUIDs.timeBased()))
       .saveToCassandra("killr_video", "clicks_by_movie",
@@ -76,20 +125,6 @@ object sparkTask {
       .map(word => (word, 1))
       .reduceByKey(_ + _)
       .print()
-
-    ssc.start()
-    ssc.awaitTermination()
-  }
-
-  def streamJoinStream(sc: SparkContext): Unit = {
-    val ssc = new StreamingContext(sc, Seconds(4))
-    val stream1 = ssc.socketTextStream("192.168.0.4", 9999)
-    val stream2 = ssc.socketTextStream("192.168.0.4", 9998)
-
-    stream1.countByValue()
-      .join(stream2.countByValue())
-      .mapValues { case (v1, v2) => v1 + v2 }
-      .print
 
     ssc.start()
     ssc.awaitTermination()
@@ -256,7 +291,7 @@ object sparkTask {
   }
 
   def usePairReduceByKey(sc: SparkContext): Unit = {
-    sc.cassandraTable("killrvideo", "videos_by_actor")
+    sc.cassandraTable("killr_video", "videos_by_actor")
       .where("actor = 'Brad Pitt'")
       .select("added_date")
       .as((year: String) => (year, 1))
