@@ -16,58 +16,112 @@ import java.nio.ByteBuffer
 
 object sparkTask {
 
-  case class Record(addedDate: String, title: String, description: Option[String])
+  val host = "192.168.0.4"
 
-  case class GenresInfo(title: String, release_date: String, genres: Set[String])
+  val redisHost = "172.17.0.3"
+  val redisPort = "7379"
+
+  val cassandraHost = "172.17.0.2"
+  val cassandraPort = "7077"
+
+  val simpleSchema = "create table if not exists " +
+    "device_data.data_stream( " +
+    "device_id text, " +
+    "sample_time bigint, " +
+    "data_type int, " +
+    "data_value float, " +
+    "data_crc int, " +
+    "primary key((device_id), sample_time, data_type)" +
+    ");"
+
+  val lessSimpleSchema = "create table if not exists " +
+    "device_data.data_stream( " +
+    "device_id text, " +
+    "sample_time bigint, " +
+    "voltage_a float, " +
+    "voltage_b float, " +
+    "current_b float, " +
+    "temperature float, " +
+    "soc float, " +
+    "primary key((device_id), sample_time)" +
+    ");"
 
   def main(args: Array[String]) = {
 
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
-      .setMaster("spark://172.17.0.2:7077")
-      .set("spark.cassandra.connection.host", "172.17.0.2")
+      .setMaster("spark://" + cassandraHost + ":" + cassandraPort)
+      .set("spark.cassandra.connection.host", cassandraHost)
       .set("spark.cleaner.ttl", "3600")
-      .set("redis.host", "172.17.0.3")
-      .set("redis.port", "7379")
+      .set("redis.host", redisHost)
+      .set("redis.port", redisPort)
       .setJars(Seq("/home/scott/repos/code/sparkCassandra/" +
         "target/scala-2.11/sparkCassandra-assembly-1.0.jar"))
-    val sc = new SparkContext(conf)
-    redisStream(sc)
+    redisStream(conf)
   }
 
-  def redisStream(sc: SparkContext): Unit = {
+  def redisStream(conf: SparkConf): Unit = {
+    val sc = new SparkContext(conf)
+    val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
     val redisStream = ssc.createRedisStreamWithoutListname(Array("device-log"),
       storageLevel = StorageLevel.MEMORY_AND_DISK_SER_2)
+
+    cc.withSessionDo { session =>
+      session.execute(
+        "create keyspace if not exists " +
+          "device_data " +
+          "with " +
+          "replication = {'class': 'SimpleStrategy', 'replication_factor': 1};"
+      )
+    }
+
+    cc.withSessionDo { session =>
+      session.execute(
+        "drop table if exists " +
+          "device_data.data_stream;"
+      )
+    }
+
+    cc.withSessionDo { session =>
+      session.execute(
+        simpleSchema
+      )
+    }
 
     val replaceThis = """[\]]|[\[]|[u]|[\']"""
     redisStream.map(record =>
       record.replaceAll(replaceThis, "")
         .split(",")
         .map(_.trim))
-      .map { case Array(u, t, p) => (u, t, parseRawPacket(p)) }
-      .print
+      .map { case Array(u, t, p) => parseRawPacket(u, t, p) }
+      .saveToCassandra("device_data", "data_stream",
+        SomeColumns("device_id", "sample_time", "data_type", "data_value", "data_crc"))
 
     ssc.start()
     ssc.awaitTermination()
   }
 
-  def parseRawPacket(packet: String): (Int, Float, Int) = {
+  def parseRawPacket(device_id: String, sample_time: String, packet: String): (String, BigInt, Int, Float, Int) = {
     val rawPacketArray = packet.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte)
 
     val dataArray = rawPacketArray.slice(5, 9).reverse
     val dataValue = ByteBuffer.wrap(dataArray).getFloat
 
-    val register = rawPacketArray(4)
+    val dataType = rawPacketArray(4)
     val crc = rawPacketArray(9) & 0xFF
 
-    (register, dataValue, crc)
+    (device_id, sample_time.toInt, dataType, dataValue, crc)
   }
+
+  case class Record(addedDate: String, title: String, description: Option[String])
+
+  case class GenresInfo(title: String, release_date: String, genres: Set[String])
 
   def streamJoinStream(sc: SparkContext): Unit = {
     val ssc = new StreamingContext(sc, Seconds(4))
-    val stream1 = ssc.socketTextStream("192.168.1.16", 9999)
-    val stream2 = ssc.socketTextStream("192.168.1.16", 9998)
+    val stream1 = ssc.socketTextStream(host, 9999)
+    val stream2 = ssc.socketTextStream(host, 9998)
 
     stream1.countByValue()
       .join(stream2.countByValue())
@@ -90,7 +144,7 @@ object sparkTask {
     }
 
     val ssc = new StreamingContext(conf, Seconds(4))
-    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+    val stream = ssc.socketTextStream(host, 9999)
     stream.map(m => (java.util.UUID.fromString(m),
       com.datastax.driver.core.utils.UUIDs.timeBased()))
       .saveToCassandra("killr_video", "clicks_by_movie",
@@ -101,7 +155,7 @@ object sparkTask {
 
   def statefulStreaming(sc: SparkContext): Unit = {
     val ssc = new StreamingContext(sc, Seconds(4))
-    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+    val stream = ssc.socketTextStream(host, 9999)
 
     def updateMovieCount(newValues: Seq[Long], oldCount: Option[Long]): Option[Long] = {
       if (newValues.isEmpty) Some(oldCount.getOrElse(0L))
@@ -120,7 +174,7 @@ object sparkTask {
 
   def streamingPackets(sc: SparkContext): Unit = {
     val ssc = new StreamingContext(sc, Seconds(4))
-    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+    val stream = ssc.socketTextStream(host, 9999)
     stream.flatMap(record => record.split(" "))
       .map(word => (word, 1))
       .reduceByKey(_ + _)
@@ -132,7 +186,7 @@ object sparkTask {
 
   def streamingJoinToTable(sc: SparkContext): Unit = {
     val ssc = new StreamingContext(sc, Seconds(4))
-    val stream = ssc.socketTextStream("192.168.0.4", 9999)
+    val stream = ssc.socketTextStream(host, 9999)
       .countByValue()
 
     val movies = ssc.cassandraTable("killrvideo", "videos")
