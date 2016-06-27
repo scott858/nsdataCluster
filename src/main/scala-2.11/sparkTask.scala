@@ -16,7 +16,7 @@ import java.nio.ByteBuffer
 
 object sparkTask {
 
-  val host = "192.168.0.4"
+  val host = "192.168.1.16"
 
   val redisHost = "172.17.0.3"
   val redisPort = "7379"
@@ -55,8 +55,8 @@ object sparkTask {
       .set("spark.cleaner.ttl", "3600")
       .set("redis.host", redisHost)
       .set("redis.port", redisPort)
-      .setJars(Seq("/home/scott/repos/code/sparkCassandra/" +
-        "target/scala-2.11/sparkCassandra-assembly-1.0.jar"))
+      .setJars(Seq("/home/scott/repos/code/nsdataCluster/" +
+        "target/scala-2.11/nsdataCluster-assembly-1.0.jar"))
     redisStream(conf)
   }
 

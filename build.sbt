@@ -22,7 +22,7 @@ lazy val commonSettings = Seq(
 lazy val app = (project in file(".")).
   settings(commonSettings: _*).
   settings(
-    name := "sparkCassandra",
+    name := "nsdataCluster",
     libraryDependencies ++= spark,
     libraryDependencies += sparkConnector,
     libraryDependencies += sparkSql,
