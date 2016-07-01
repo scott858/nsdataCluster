@@ -17,12 +17,17 @@ import java.nio.ByteBuffer
 object sparkTask {
 
   val host = "192.168.1.16"
+  val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
+    "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
-  val redisHost = "172.17.0.3"
-  val redisPort = "7379"
+  //  val redisHost = "172.17.0.3"
+  //  val redisPort = "7379"
+  val redisHost = "172.16.30.13"
+  val redisPort = "6379"
 
-  val cassandraHost = "172.17.0.2"
-  val cassandraPort = "7077"
+  //  val sparkHost = "172.17.0.2"
+  val sparkMaster = "172.16.30.15"
+  val sparkPort = "7077"
 
   val simpleSchema = "create table if not exists " +
     "device_data.data_stream( " +
@@ -48,19 +53,21 @@ object sparkTask {
 
   def main(args: Array[String]) = {
 
+    redisStream()
+
+  }
+
+  def redisStream(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
-      .setMaster("spark://" + cassandraHost + ":" + cassandraPort)
-      .set("spark.cassandra.connection.host", cassandraHost)
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
       .set("spark.cleaner.ttl", "3600")
       .set("redis.host", redisHost)
       .set("redis.port", redisPort)
-      .setJars(Seq("/home/scott/repos/code/nsdataCluster/" +
-        "target/scala-2.11/nsdataCluster-assembly-1.0.jar"))
-    redisStream(conf)
-  }
+//      .setJars(Seq(assemblyPath))
 
-  def redisStream(conf: SparkConf): Unit = {
     val sc = new SparkContext(conf)
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
@@ -76,12 +83,12 @@ object sparkTask {
       )
     }
 
-    cc.withSessionDo { session =>
-      session.execute(
-        "drop table if exists " +
-          "device_data.data_stream;"
-      )
-    }
+//    cc.withSessionDo { session =>
+//      session.execute(
+//        "drop table if exists " +
+//          "device_data.data_stream;"
+//      )
+//    }
 
     cc.withSessionDo { session =>
       session.execute(
