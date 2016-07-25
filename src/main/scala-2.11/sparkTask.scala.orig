@@ -27,8 +27,14 @@ object sparkTask {
   val redisHost = "172.16.30.13"
   val redisPort = "6379"
 
+<<<<<<< HEAD
   //  val sparkHost = "172.17.0.2"
   val sparkMaster = "172.16.30.15"
+=======
+  val cassandraHost = "172.17.0.2"
+
+  val sparkHost = "172.17.0.2"
+>>>>>>> master
   val sparkPort = "7077"
 
   val simpleSchema = "create table if not exists " +
@@ -67,18 +73,29 @@ object sparkTask {
     //        debugStreamData()
   }
 
-  def runSpark(): Unit = {
+<<<<<<< HEAD
+    redisStream()
+
+  }
+
+  def redisStream(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
       .setMaster("spark://" + sparkMaster + ":" + sparkPort)
       .set("spark.executor.memory", "2G")
       .set("spark.cassandra.connection.host", sparkMaster)
+=======
+  def runSpark(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://" + sparkHost + ":" + sparkPort)
+      .set("spark.cassandra.connection.host", cassandraHost)
+>>>>>>> master
       .set("spark.cleaner.ttl", "3600")
       .set("redis.host", redisHost)
       .set("redis.port", redisPort)
 //      .setJars(Seq(assemblyPath))
 
-  def redisStream(conf: SparkConf): Unit = {
     val sc = new SparkContext(conf)
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
@@ -94,12 +111,12 @@ object sparkTask {
       )
     }
 
-    cc.withSessionDo { session =>
-      session.execute(
-        "drop table if exists " +
-          "device_data.data_stream;"
-      )
-    }
+//    cc.withSessionDo { session =>
+//      session.execute(
+//        "drop table if exists " +
+//          "device_data.data_stream;"
+//      )
+//    }
 
     cc.withSessionDo { session =>
       session.execute(
