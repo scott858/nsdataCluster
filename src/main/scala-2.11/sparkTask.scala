@@ -14,6 +14,8 @@ import com.datastax.spark.connector.streaming._
 import com.redislabs.provider.redis._
 import java.nio.ByteBuffer
 
+import com.datastax.spark.connector.mapper.DefaultColumnMapper
+
 object sparkTask {
 
   val host = "192.168.1.16"
@@ -22,7 +24,9 @@ object sparkTask {
   val redisPort = "7379"
 
   val cassandraHost = "172.17.0.2"
-  val cassandraPort = "7077"
+
+  val sparkHost = "172.17.0.2"
+  val sparkPort = "7077"
 
   val simpleSchema = "create table if not exists " +
     "device_data.data_stream( " +
@@ -31,7 +35,8 @@ object sparkTask {
     "data_type int, " +
     "data_value float, " +
     "data_crc int, " +
-    "primary key((device_id), sample_time, data_type)" +
+    "raw_packet text, " +
+    "primary key((device_id), sample_time, data_type, raw_packet)" +
     ");"
 
   val lessSimpleSchema = "create table if not exists " +
@@ -46,11 +51,23 @@ object sparkTask {
     "primary key((device_id), sample_time)" +
     ");"
 
-  def main(args: Array[String]) = {
+  val rawSchema = "create table if not exists " +
+    "device_data.data_stream( " +
+    "device_id text, " +
+    "sample_time bigint, " +
+    "raw_packet text, " +
+    "primary key((device_id), sample_time, raw_packet)" +
+    ");"
 
+  def main(args: Array[String]) = {
+    runSpark()
+    //        debugStreamData()
+  }
+
+  def runSpark(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
-      .setMaster("spark://" + cassandraHost + ":" + cassandraPort)
+      .setMaster("spark://" + sparkHost + ":" + sparkPort)
       .set("spark.cassandra.connection.host", cassandraHost)
       .set("spark.cleaner.ttl", "3600")
       .set("redis.host", redisHost)
@@ -89,29 +106,72 @@ object sparkTask {
       )
     }
 
-    val replaceThis = """[\]]|[\[]|[u]|[\']"""
-    redisStream.map(record =>
-      record.replaceAll(replaceThis, "")
-        .split(",")
-        .map(_.trim))
+    cc.withSessionDo { session =>
+      session.execute(
+        rawSchema
+      )
+    }
+
+    redisStream.map(record => parseRecord(record))
       .map { case Array(u, t, p) => parseRawPacket(u, t, p) }
       .saveToCassandra("device_data", "data_stream",
-        SomeColumns("device_id", "sample_time", "data_type", "data_value", "data_crc"))
+        SomeColumns("device_id", "sample_time", "data_type",
+          "data_value", "data_crc", "raw_packet"))
 
     ssc.start()
     ssc.awaitTermination()
   }
 
-  def parseRawPacket(device_id: String, sample_time: String, packet: String): (String, BigInt, Int, Float, Int) = {
-    val rawPacketArray = packet.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte)
+  def debugStreamData(): Unit = {
+    //    val record = "[u'0065768c-2ee6-43eb-83c0-6125393ea9c8', 0, u'200547d703000009550603c00f']"
+    val record = "[u'0065768c-2ee6-43eb-83c0-6125393ea9c8', 10, u'200547d70300000955060309550603']"
+    val recordArray = parseRecord(record)
+    recordArray.foreach(println)
+    val parsedPacket = parseRawPacket(recordArray(0), recordArray(1), recordArray(2))
+    print(parsedPacket)
+  }
 
-    val dataArray = rawPacketArray.slice(5, 9).reverse
-    val dataValue = ByteBuffer.wrap(dataArray).getFloat
+  def parseRecord(record: String): Array[String] = {
+    val replaceThis = """[\]]|[\[]|[u]|[\']"""
+    val recordArray = record.replaceAll(replaceThis, "")
+      .split(",")
+      .map(_.trim)
 
-    val dataType = rawPacketArray(4)
-    val crc = rawPacketArray(9) & 0xFF
+    recordArray
+  }
 
-    (device_id, sample_time.toInt, dataType, dataValue, crc)
+  case class ParsedPacket(deviceId: String, sampleTime: BigInt, dataType: Int,
+                          dataValue: Float, dataCrc: Int, rawPacket: String)
+
+  def parseRawPacket(deviceId: String, sampleTime: String, packet: String): ParsedPacket = {
+    if (packet.length == 26) {
+      val rawPacketArray = packet.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte)
+
+      val timeArray = rawPacketArray.slice(3, 7).reverse
+      val timeValue = ByteBuffer.wrap(timeArray).getInt + sampleTime.toInt
+
+      val dataArray = rawPacketArray.slice(8, 12).reverse
+      val dataValue = ByteBuffer.wrap(dataArray).getFloat
+
+      val dataType = rawPacketArray(7)
+      val crc = rawPacketArray(12) & 0xFF
+      ParsedPacket(deviceId, timeValue, dataType, dataValue, crc, "")
+    } else {
+      ParsedPacket(deviceId, sampleTime.toInt, 0, 0, 0, packet)
+    }
+  }
+
+  def streamingPackets(conf: SparkConf): Unit = {
+    val sc = new SparkContext(conf)
+    val ssc = new StreamingContext(sc, Seconds(4))
+    val stream = ssc.socketTextStream(host, 9999)
+    stream.flatMap(record => record.split(" "))
+      .map(word => (word, 1))
+      .reduceByKey(_ + _)
+      .print()
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   case class Record(addedDate: String, title: String, description: Option[String])
@@ -167,18 +227,6 @@ object sparkTask {
       .print
 
     ssc.checkpoint("/home")
-
-    ssc.start()
-    ssc.awaitTermination()
-  }
-
-  def streamingPackets(sc: SparkContext): Unit = {
-    val ssc = new StreamingContext(sc, Seconds(4))
-    val stream = ssc.socketTextStream(host, 9999)
-    stream.flatMap(record => record.split(" "))
-      .map(word => (word, 1))
-      .reduceByKey(_ + _)
-      .print()
 
     ssc.start()
     ssc.awaitTermination()
