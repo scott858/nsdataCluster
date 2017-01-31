@@ -1,4 +1,3 @@
-resolvers += Resolver.mavenLocal
 val spark = Seq(
   ("org.apache.spark" %% "spark-core" % "1.6.1")
     .exclude("org.mortbay.jetty", "servlet-api")

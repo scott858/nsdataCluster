@@ -76,9 +76,7 @@ object sparkTask {
       .set("spark.cleaner.ttl", "3600")
       .set("redis.host", redisHost)
       .set("redis.port", redisPort)
-//      .setJars(Seq(assemblyPath))
 
-  def redisStream(conf: SparkConf): Unit = {
     val sc = new SparkContext(conf)
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
