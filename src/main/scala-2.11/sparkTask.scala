@@ -18,17 +18,18 @@ import com.datastax.spark.connector.mapper.DefaultColumnMapper
 
 object sparkTask {
 
-  val host = "192.168.1.16"
+//  val host = "192.168.1.16"
+  val host = "192.168.1.72"
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
     "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
-  //  val redisHost = "172.17.0.3"
-  //  val redisPort = "7379"
-  val redisHost = "172.16.30.13"
-  val redisPort = "6379"
+    val redisHost = "172.17.0.3"
+    val redisPort = "7379"
+//  val redisHost = "172.16.30.13"
+//  val redisPort = "6379"
 
-  //  val sparkHost = "172.17.0.2"
-  val sparkMaster = "172.16.30.15"
+    val sparkMaster = "172.17.0.2"
+//  val sparkMaster = "172.16.30.15"
   val sparkPort = "7077"
 
   val simpleSchema = "create table if not exists " +
@@ -63,8 +64,9 @@ object sparkTask {
     ");"
 
   def main(args: Array[String]) = {
-    runSpark()
-    //        debugStreamData()
+//    runSpark()
+//            debugStreamData()
+    saveStreamToCassandra()
   }
 
   def runSpark(): Unit = {
@@ -78,6 +80,7 @@ object sparkTask {
       .set("redis.port", redisPort)
 
     val sc = new SparkContext(conf)
+//    sc.setLogLevel("INFO")
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
     val redisStream = ssc.createRedisStreamWithoutListname(Array("device-log"),
@@ -160,7 +163,23 @@ object sparkTask {
     }
   }
 
-  def streamingPackets(conf: SparkConf): Unit = {
+  case class ParsedTestPacket(id: String, d: String, f: String, u: String)
+
+  def parseRawTestPacket(packet: String): ParsedTestPacket = {
+    packet.split(" ") match{
+      case Array(f, u, d, id) => ParsedTestPacket(id, f, u, d)
+      case _ => ParsedTestPacket("0", "0", "0", "0")
+    }
+  }
+
+  def streamingPackets(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
+      .set("spark.cleaner.ttl", "3600")
+
     val sc = new SparkContext(conf)
     val ssc = new StreamingContext(sc, Seconds(4))
     val stream = ssc.socketTextStream(host, 9999)
@@ -191,23 +210,80 @@ object sparkTask {
     ssc.awaitTermination()
   }
 
-  def saveStreamToCassandra(sc: SparkContext, conf: SparkConf): Unit = {
+  def saveStreamToCassandra(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
+      .set("spark.cassandra.output.consistency.level", "ONE")
+      .set("spark.cleaner.ttl", "3600")
+      .set("redis.host", redisHost)
+      .set("redis.port", redisPort)
+
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
 
     cc.withSessionDo { session =>
+      session.execute("use test_data")
+    }
+
+    cc.withSessionDo { session =>
+      session.execute("create keyspace if not exists " +
+        "test_data " +
+        "with " +
+        "replication = {'class': 'SimpleStrategy', 'replication_factor': 3}")
+    }
+
+    cc.withSessionDo(session =>
+      session.execute("drop table if exists " +
+        "fuck_you")
+    )
+
+    cc.withSessionDo { session =>
       session.execute("create table if not exists " +
-        "killr_video.clicks_by_movie ( " +
-        "video_id UUID, " +
-        "click_id TIMEUUID, " +
-        "primary key(video_id,click_id));")
+        "test_data.fuck_you ( " +
+        "f text, " +
+        "u text, " +
+        "d text, " +
+        "id text, " +
+        "primary key(id));")
     }
 
     val ssc = new StreamingContext(conf, Seconds(4))
     val stream = ssc.socketTextStream(host, 9999)
-    stream.map(m => (java.util.UUID.fromString(m),
-      com.datastax.driver.core.utils.UUIDs.timeBased()))
-      .saveToCassandra("killr_video", "clicks_by_movie",
-        SomeColumns("video_id", "click_id"))
+
+//    val sc = new SparkContext(conf)
+//    sc.parallelize(Array(("25", "2", "3", "4"))).saveToCassandra("test_data", "fuck_you", SomeColumns("id", "d", "f", "u"))
+
+//    stream.map(m => (java.util.UUID.fromString(m),
+//      com.datastax.driver.core.utils.UUIDs.timeBased()))
+//      .saveToCassandra("test_data", "fuck_you",
+//        SomeColumns("id", "d")
+//      )
+
+//    stream.map(_ => ("5", "10", "11", "12"))
+//      .saveToCassandra("test_data", "fuck_you",
+//        SomeColumns("id", "d", "f", "u")
+//      )
+
+    stream.map(record => record.split("\n"))
+      .map { case Array(p) => parseRawTestPacket(p) }
+      .saveToCassandra("test_data", "fuck_you",
+        SomeColumns("id", "d", "f", "u")
+      )
+
+    ssc.start()
+    ssc.awaitTermination()
+
+//    val rows = stream.flatMap(_.split("\n"))
+//      .map(_.split(" "))
+
+//    stream.map(record => parseRecord(record))
+//      .map { case Array(u, t, p) => parseRawPacket(u, t, p) }
+//      .saveToCassandra("device_data", "data_stream",
+//        SomeColumns("device_id", "sample_time", "data_type",
+//          "data_value", "data_crc", "raw_packet")
+//      )
 
     //see also foreachRDD
   }
