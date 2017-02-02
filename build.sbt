@@ -1,11 +1,16 @@
+PB.targets in Compile := Seq(
+  scalapb.gen() -> (sourceManaged in Compile).value
+)
+
 val spark = Seq(
-  ("org.apache.spark" %% "spark-core" % "1.6.1")
+    ("org.apache.spark" %% "spark-core" % "1.6.0")
     .exclude("org.mortbay.jetty", "servlet-api")
     .exclude("commons.beanutils", "commons-beanutils-core")
     .exclude("commons-collections", "commons-collections")
     .exclude("commons-logging", "commons-logging")
     .exclude("com.esotericsoftware.minlog", "minlog")
 )
+
 val sparkSql = "org.apache.spark" %% "spark-sql" % "1.6.1" //intransitive()
 val sparkStreaming = "org.apache.spark" % "spark-streaming_2.11" % "1.6.1" //intransitive()
 val jedis = "redis.clients" % "jedis" % "2.8.1" //intransitive()
@@ -13,6 +18,7 @@ val cassandraThrift = "org.apache.cassandra" % "cassandra-thrift" % "3.5" intran
 val cassandraClientUtil = "org.apache.cassandra" % "cassandra-clientutil" % "3.5" intransitive()
 val cassandraCore = "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.2" intransitive()
 val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "1.6.0"
+val protobuf = "com.trueaccord.scalapb" %% "compilerplugin" % "0.5.47"
 
 lazy val commonSettings = Seq(
   version := "1.0",
@@ -30,7 +36,8 @@ lazy val app = (project in file(".")).
     libraryDependencies += cassandraThrift,
     libraryDependencies += cassandraClientUtil,
     libraryDependencies += cassandraCore,
-    libraryDependencies += jedis
+    libraryDependencies += jedis,
+    libraryDependencies += protobuf
   )
 
 assemblyMergeStrategy in assembly := {

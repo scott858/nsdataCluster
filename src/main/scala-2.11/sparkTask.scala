@@ -2,6 +2,7 @@
   * Created by scott on 6/12/16.
   */
 
+import bms_voltage.bms_voltage._
 import java.util.UUID
 
 import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
@@ -15,6 +16,8 @@ import com.redislabs.provider.redis._
 import java.nio.ByteBuffer
 
 import com.datastax.spark.connector.mapper.DefaultColumnMapper
+import com.google.protobuf.CodedInputStream
+import org.apache.spark.sql.SQLContext
 
 object sparkTask {
 
@@ -66,7 +69,90 @@ object sparkTask {
   def main(args: Array[String]) = {
 //    runSpark()
 //            debugStreamData()
-    saveStreamToCassandra()
+    saveBmsVoltageStreamToCassandra()
+  }
+
+  case class ParsedBmsVoltagePacket(id: String, d: String, f: String, u: String)
+
+  def parseBmsVoltagePacket(packet: String): ParsedBmsVoltagePacket = {
+    packet.split(" ") match{
+      case Array(f, u, d, id) => ParsedBmsVoltagePacket(id, f, u, d)
+      case _ => ParsedBmsVoltagePacket("0", "0", "0", "0")
+    }
+  }
+
+  def parseBmsVoltageProtobuf(packet: CodedInputStream): BmsVoltage = {
+    val bmsVoltage = BmsVoltage.parseFrom(packet)
+    bmsVoltage.mergeFrom(packet)
+  }
+
+  def saveBmsVoltageStreamToCassandra(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
+      .set("spark.cassandra.output.consistency.level", "ONE")
+      .set("spark.cleaner.ttl", "3600")
+
+    val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
+
+    cc.withSessionDo { session =>
+      session.execute("create keyspace if not exists " +
+        "aerobms " +
+        "with " +
+        "replication = {'class': 'SimpleStrategy', 'replication_factor': 1}")
+    }
+
+    cc.withSessionDo(session => session.execute("use aerobms"))
+
+    cc.withSessionDo(session =>
+      session.execute("drop table if exists " +
+        "balancing_voltage")
+    )
+
+    cc.withSessionDo(session =>
+      session.execute("drop table if exists " +
+        "cell_voltages")
+    )
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "aerobms.cell_voltages ( " +
+        "real_time  timestamp, " +
+        "cpu_time   bigint, " +
+        "device_id  uuid, " +
+        "voltage_0  int, " +
+        "voltage_1  int, " +
+        "voltage_2  int, " +
+        "voltage_3  int, " +
+        "voltage_4  int, " +
+        "voltage_5  int, " +
+        "voltage_6  int, " +
+        "voltage_7  int, " +
+        "voltage_8  int, " +
+        "voltage_9  int, " +
+        "voltage_10 int, " +
+        "voltage_11 int, " +
+        "voltage_12 int, " +
+        "voltage_13 int, " +
+        "voltage_14 int, " +
+        "voltage_15 int, " +
+        "primary key((real_time, device_id), cpu_time));")
+    }
+
+    val ssc = new StreamingContext(conf, Seconds(4))
+    val stream = ssc.socketTextStream(host, 9999)
+
+    val protobytes = stream.map(row => row.getBytes())
+    protobytes.print()
+//    val protobuf = protobytes.map(BmsVoltage.parseFrom(_))
+    val protobuf = protobytes.map(x => BmsVoltage.parseFrom(x))
+      .saveToCassandra("aerobms", "cell_voltages")
+
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   def runSpark(): Unit = {
@@ -163,15 +249,6 @@ object sparkTask {
     }
   }
 
-  case class ParsedTestPacket(id: String, d: String, f: String, u: String)
-
-  def parseRawTestPacket(packet: String): ParsedTestPacket = {
-    packet.split(" ") match{
-      case Array(f, u, d, id) => ParsedTestPacket(id, f, u, d)
-      case _ => ParsedTestPacket("0", "0", "0", "0")
-    }
-  }
-
   def streamingPackets(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
@@ -210,7 +287,7 @@ object sparkTask {
     ssc.awaitTermination()
   }
 
-  def saveStreamToCassandra(): Unit = {
+  def saveStreamToCassandraTest(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Streaming Example")
       .setMaster("spark://" + sparkMaster + ":" + sparkPort)
@@ -252,40 +329,12 @@ object sparkTask {
     val ssc = new StreamingContext(conf, Seconds(4))
     val stream = ssc.socketTextStream(host, 9999)
 
-//    val sc = new SparkContext(conf)
-//    sc.parallelize(Array(("25", "2", "3", "4"))).saveToCassandra("test_data", "fuck_you", SomeColumns("id", "d", "f", "u"))
-
-//    stream.map(m => (java.util.UUID.fromString(m),
-//      com.datastax.driver.core.utils.UUIDs.timeBased()))
-//      .saveToCassandra("test_data", "fuck_you",
-//        SomeColumns("id", "d")
-//      )
-
-//    stream.map(_ => ("5", "10", "11", "12"))
-//      .saveToCassandra("test_data", "fuck_you",
-//        SomeColumns("id", "d", "f", "u")
-//      )
-
     stream.map(record => record.split("\n"))
-      .map { case Array(p) => parseRawTestPacket(p) }
-      .saveToCassandra("test_data", "fuck_you",
-        SomeColumns("id", "d", "f", "u")
-      )
+      .map { case Array(p) => parseBmsVoltagePacket(p) }
+      .saveToCassandra("test_data", "fuck_you")
 
     ssc.start()
     ssc.awaitTermination()
-
-//    val rows = stream.flatMap(_.split("\n"))
-//      .map(_.split(" "))
-
-//    stream.map(record => parseRecord(record))
-//      .map { case Array(u, t, p) => parseRawPacket(u, t, p) }
-//      .saveToCassandra("device_data", "data_stream",
-//        SomeColumns("device_id", "sample_time", "data_type",
-//          "data_value", "data_crc", "raw_packet")
-//      )
-
-    //see also foreachRDD
   }
 
   def statefulStreaming(sc: SparkContext): Unit = {

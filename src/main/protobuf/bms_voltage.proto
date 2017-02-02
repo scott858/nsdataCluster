@@ -1,0 +1,25 @@
+syntax = "proto2";
+
+package bms_voltage;
+
+message BmsVoltage {
+    required int64 real_time = 2;
+    required int32 device_id = 1;
+    required int64 cpu_time  = 19;
+    required int32 voltage_0 = 3;
+    required int32 voltage_1 = 4;
+    required int32 voltage_2 = 5;
+    required int32 voltage_3 = 6;
+    required int32 voltage_4 = 7;
+    required int32 voltage_5 = 8;
+    required int32 voltage_6 = 9;
+    required int32 voltage_7 = 10;
+    required int32 voltage_8 = 11;
+    required int32 voltage_9 = 12;
+    required int32 voltage_10 = 13;
+    required int32 voltage_11 = 14;
+    required int32 voltage_12 = 15;
+    required int32 voltage_13 = 16;
+    required int32 voltage_14 = 17;
+    required int32 voltage_15 = 18;
+}
