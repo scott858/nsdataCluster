@@ -119,7 +119,7 @@ object sparkTask {
     //    val protobytes = stream.flatMap(x => x.split(0.toString)).map(x => x.getBytes)
     //    val protobytes = stream.flatMap(x => x.split(0.toString)).map(x => x.getBytes)
     val protobytes = stream.flatMap(x => x.split("\0"))
-    val protobuf = stream.map(x => parseBmsVoltageProtobuf(x))
+    val protobuf = protobytes.map(x => parseBmsVoltageProtobuf(x))
     protobuf.saveToCassandra("aerobms", "cell_voltages")
 
     ssc.start()
@@ -264,7 +264,7 @@ object sparkTask {
   def printPacket(packet: String): Unit = {
     println()
     println(packet.length)
-    packet.foreach(x => print(x.asDigit + " "))
+    packet.foreach(x => print(x.toInt + " "))
     println()
   }
 
@@ -338,18 +338,20 @@ class CustomReceiver(host: String, port: Int)
       val messageBufferLength = 65535
       val messageBuffer = Array.fill[Byte](messageBufferLength + 1)(1)
       while (true) {
+        val messageStringArray = ArrayBuffer.fill[String](1)("")
+        var messageCount = 0
         if (messageBuffer.contains(0)) {
           msgEnd = messageBuffer.indexOf(0)
 
-
-          val message = messageBuffer.slice(0, msgEnd).map(x => (x & 0xFF).toChar)
+          val message = messageBuffer.slice(0 + 1, msgEnd + 2).map(x => (x & 0xFF).toChar)
+          message(0) = 0
           val messageString = new String(message)
-          val messageStringArray = ArrayBuffer.fill[String](1)(messageString)
-          store(messageStringArray)
+          messageStringArray(messageCount) = messageString
 
           for (i <- 0 until messageBufferLength - msgEnd) {
             messageBuffer(i) = messageBuffer(i + 1 + msgEnd)
           }
+          messageCount += 1
         } else {
           stream.read(
             messageBuffer,
@@ -357,6 +359,7 @@ class CustomReceiver(host: String, port: Int)
             messageBufferLength - msgEnd
           )
         }
+        store(messageStringArray)
       }
 
       stream.close()
