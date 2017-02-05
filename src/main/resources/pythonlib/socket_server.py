@@ -27,8 +27,8 @@ class MockAerobmsServer(socketserver.BaseRequestHandler):
         bms_voltage = bmsv.BmsVoltage()
         bms_voltage.device_id = 1
         while True:
-            bms_voltage.real_time = int(1000 * time.time())
-            bms_voltage.cpu_time = int(1000 * time.time())
+            bms_voltage.real_time = int(1000000 * time.time())
+            bms_voltage.cpu_time = int(1000000 * time.time())
             for cell_index in range(16):
                 voltage_key = "voltage_{}".format(cell_index)
                 voltage_value = np.random.randint(0, 4096)
@@ -36,12 +36,11 @@ class MockAerobmsServer(socketserver.BaseRequestHandler):
 
             # msg = bms_voltage.SerializeToString() + bytes([0])
             msg = bms_voltage.SerializeToString()
-            msg += bytes([0])
-            msg_ints = list(msg)
-            print(msg_ints)
+            msg = "\0".encode() + msg + "\0".encode()
             self.request.sendall(msg)
-            time.sleep(1)
+            # time.sleep(1)
             count += 1
+            print(count)
 
 
 class AeroBmsZeromqServer:
@@ -68,7 +67,7 @@ class AeroBmsZeromqServer:
 
             # msg = bms_voltage.SerializeToString() + bytes([0])
             msg = bms_voltage.SerializeToString()
-            msg = "0".encode() + msg
+            msg = "\0".encode() + msg + "\0".encode()
             print(list(msg))
             print(len(msg))
             socket.send(msg)
@@ -80,7 +79,7 @@ if __name__ == '__main__':
     # HOST, PORT = '192.168.0.4', 9999
     # HOST, PORT = '172.16.0.15', 9999
     # HOST, PORT = '192.168.1.72', 9999
-    HOST, PORT = '172.17.0.1', 9999
+    HOST, PORT = '192.168.0.4', 9999
 
     # AeroBmsZeromqServer.serve_forever(HOST, PORT)
     with closing(socketserver.TCPServer((HOST, PORT), MockAerobmsServer)) as server:

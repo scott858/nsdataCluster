@@ -13,7 +13,7 @@ PB.targets in Compile := Seq(
 //scalacOptions += "-Ylog-classpath"
 
 val spark = Seq(
-    ("org.apache.spark" %% "spark-core" % "2.0.2")
+    ("org.apache.spark" %% "spark-core" % "2.1.0")
     .exclude("org.mortbay.jetty", "servlet-api")
     .exclude("commons.beanutils", "commons-beanutils-core")
     .exclude("commons-collections", "commons-collections")
@@ -21,49 +21,36 @@ val spark = Seq(
     .exclude("com.esotericsoftware.minlog", "minlog")
 )
 
-val sparkSql = "org.apache.spark" %% "spark-sql" % "2.0.2" //intransitive()
-val sparkStreaming = "org.apache.spark" % "spark-streaming_2.11" % "2.0.2" //intransitive()
-//val jedis = "redis.clients" % "jedis" % "2.8.1" //intransitive()
-val cassandraThrift = "org.apache.cassandra" % "cassandra-thrift" % "3.9" intransitive()
-val cassandraClientUtil = "org.apache.cassandra" % "cassandra-clientutil" % "3.9" intransitive()
-val cassandraCore = "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.3" intransitive()
-//val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "1.6.0"
-//val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "1.6.3"
-//val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "1.5.2"
-//val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M3"
-val sparkConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M2"
-val protobuf = "com.trueaccord.scalapb" %% "compilerplugin" % "0.5.47"
+lazy val app = (project in file(".")).
+  settings(commonSettings: _*).
+  settings(
+    name := "nsdataCluster",
+    libraryDependencies ++= spark,
+    libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M2",
+    libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.1.0",
+    libraryDependencies += "org.apache.spark" % "spark-streaming_2.11" % "2.1.0",
+    libraryDependencies += "org.apache.cassandra" % "cassandra-thrift" % "3.9" intransitive(),
+    libraryDependencies += "org.apache.cassandra" % "cassandra-clientutil" % "3.9" intransitive(),
+    libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.3" intransitive(),
+    libraryDependencies += "org.apache.bahir" %% "spark-streaming-zeromq" % "2.0.2",
+    libraryDependencies += "com.trueaccord.scalapb" %% "compilerplugin" % "0.5.47"
+//    libraryDependencies += jedis
+//    libraryDependencies += jzmq,
+//    libraryDependencies += akka
+//      libraryDependencies += akka
+//    libraryDependencies += zeromq,
+//    libraryDependencies += jna
+  )
+
 //val jzmq = "org.zeromq" % "jzmq" % "3.1.0"
 //val jzmq = "org.zeromq" % "jzmq" % "2.1.2"
 //val zeromq = "org.zeromq" % "zeromq-scala-binding_2.11.0-M3" % "0.0.7"
 //val zeromq = "com.mdialog" %% "scala-zeromq" % "1.1.1"
 //val akka = "com.typesafe.akka" %% "akka-actor" % "2.4.16"
 //val joda = "joda-time" % "joda-time" % "2.9.7"
-val sparkzmq = "org.apache.bahir" %% "spark-streaming-zeromq" % "2.0.2"
 //val akka = "com.typesafe.akka" %% "akka-cluster-tools" % "2.4.16"
 //val jna = "net.java.dev.jna" % "jna" % "3.5.2"
 
-lazy val app = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
-    name := "nsdataCluster",
-    libraryDependencies ++= spark,
-//    libraryDependencies += sparkConnector,
-    libraryDependencies += sparkSql,
-    libraryDependencies += sparkStreaming,
-    libraryDependencies += cassandraThrift,
-    libraryDependencies += cassandraClientUtil,
-    libraryDependencies += cassandraCore,
-    libraryDependencies += sparkConnector,
-//    libraryDependencies += jedis
-//    libraryDependencies += jzmq,
-//    libraryDependencies += akka
-      libraryDependencies += sparkzmq,
-//      libraryDependencies += akka
-//    libraryDependencies += zeromq,
-//    libraryDependencies += jna
-    libraryDependencies += protobuf
-  )
 
 assemblyMergeStrategy in assembly := {
   case PathList("javax", "servlet", xs@_*) => MergeStrategy.last

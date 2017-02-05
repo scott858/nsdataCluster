@@ -771,4 +771,105 @@ object sparkTaskOld {
     println(rdd.map(_.getInt("value")).sum)
   }
 
+  case class ParsedBmsVoltagePacket(id: String, d: String, f: String, u: String)
+
+  def parseBmsVoltagePacket(packet: String): ParsedBmsVoltagePacket = {
+    packet.split(" ") match {
+      case Array(f, u, d, id) => ParsedBmsVoltagePacket(id, f, u, d)
+      case _ => ParsedBmsVoltagePacket("0", "0", "0", "0")
+    }
+  }
+
+  def saveStreamToCassandraTest(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Streaming Example")
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
+      .set("spark.cassandra.output.consistency.level", "ONE")
+      .set("spark.cleaner.ttl", "3600")
+
+    val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
+
+    cc.withSessionDo { session =>
+      session.execute("use test_data")
+    }
+
+    cc.withSessionDo { session =>
+      session.execute("create keyspace if not exists " +
+        "test_data " +
+        "with " +
+        "replication = {'class': 'SimpleStrategy', 'replication_factor': 3}")
+    }
+
+    cc.withSessionDo(session =>
+      session.execute("drop table if exists " +
+        "fuck_you")
+    )
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "test_data.fuck_you ( " +
+        "f text, " +
+        "u text, " +
+        "d text, " +
+        "id text, " +
+        "primary key(id));")
+    }
+
+    val ssc = new StreamingContext(conf, Seconds(4))
+//    val stream = ssc.socketTextStream(streamSource, 9999)
+
+//    stream.map(record => record.split("\n"))
+//      .map { case Array(p) => parseBmsVoltagePacket(p) }
+//      .saveToCassandra("test_data", "fuck_you")
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def saveBmsVoltageZmqStreamToCassandra(): Unit = {
+    val conf = new SparkConf(true)
+      .setAppName("Aero BMS")
+      .setMaster("spark://" + sparkMaster + ":" + sparkPort)
+      .set("spark.executor.memory", "2G")
+      .set("spark.cassandra.connection.host", sparkMaster)
+      .set("spark.cassandra.output.consistency.level", "ONE")
+      .set("spark.cleaner.ttl", "3600")
+
+    val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
+//    setupSchema(cc)
+
+    def bytesToStringIterator(x: Seq[ByteString]): Iterator[String] =
+      x.map(_.utf8String).iterator
+
+    val ssc = new StreamingContext(conf, Seconds(4))
+    ssc.sparkContext.setLogLevel("WARN")
+
+    //    val stream = ssc.socketTextStream(streamSource, 9999, StorageLevel.MEMORY_ONLY)
+    //    val stream = ssc.rawSocketStream(streamSource, 9999, StorageLevel.MEMORY_ONLY)
+
+//    val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
+
+    //    val stream = ZeroMQUtils.createStream(
+    //      ssc,
+    //      "tcp://172.17.0.1:9999",
+    //      Subscribe(""),
+    //      bytesToStringIterator _
+    //    )
+
+    //        val words = stream.flatMap(_.split(" "))
+    //        val wordCounts = words.map(x => (x,1)).reduceByKey(_+_)
+    //        wordCounts.print
+    //        val protobytes = stream.flatMap(x => x.split(0.toString)).map(x => x.getBytes)
+
+//    val protobytes = stream.map(x => x.map(y => y.toByte).to[Array])
+//    val protobuf = protobytes.map(x => parseBmsVoltageProtobuf(x))
+//    protobuf.print
+//    protobuf.saveToCassandra("aerobms", "cell_voltages")
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
 }
