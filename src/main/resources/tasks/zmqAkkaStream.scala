@@ -1,23 +1,18 @@
-import java.io._
-import java.nio.ByteBuffer
+package tasks
 
-import scala.language.implicitConversions
+import akka.util.ByteString
+import akka.zeromq.Subscribe
 import bms_voltage.bms_voltage._
-
-import scala.collection.mutable.ArrayBuffer
 import com.datastax.spark.connector.cql.CassandraConnector
 import com.datastax.spark.connector.streaming._
 import org.apache.spark.SparkConf
+import org.apache.spark.streaming.zeromq._
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.storage.StorageLevel
-import org.apache.spark.streaming.receiver.Receiver
-import zeromq.{Message, SocketType, ZeroMQ}
 
-import scala.concurrent.Await
-import scala.concurrent.duration._
+import scala.language.implicitConversions
 
 
-object sparkTask {
+object zmqAkkaStream {
 
   val streamSource = "192.168.0.4"
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
@@ -26,45 +21,9 @@ object sparkTask {
   val sparkMaster = streamSource
   val sparkPort = "7077"
 
-  def storeMessage(message: Message): Unit = {
-    print(message.map(_.utf8String).mkString)
-  }
-
-  def receiveTest() {
-    try {
-
-      val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.0.4:9999")
-      socket.subscribe("")
-
-      while (true) {
-        val messageOption = socket.recvOption
-        messageOption match {
-          case Some(message) =>
-            for (i <- 0 until message.length) {
-              val messageString = new String(
-                message(i).map(x => if (x < 0) (256 + x).toChar else x.toChar).toArray
-              )
-              println(messageString.map(x => x.toInt + " "))
-            }
-          case _ =>
-        }
-      }
-      socket.close
-
-    } catch {
-      case e: IOException =>
-        e.printStackTrace()
-      case e: java.net.ConnectException =>
-      case e: Exception =>
-        e.printStackTrace()
-      case t: Throwable =>
-    }
-  }
-
-  def main(args: Array[String]) = {
+  def mainAkkaZMQ(args: Array[String]) = {
     saveBmsVoltageZmqStreamToCassandra()
-//    receiveTest()
+    //    receiveTest()
   }
 
   def saveBmsVoltageZmqStreamToCassandra(): Unit = {
@@ -82,7 +41,15 @@ object sparkTask {
     val ssc = new StreamingContext(conf, Seconds(4))
     ssc.sparkContext.setLogLevel("WARN")
 
-    val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
+    def bytesToStringIterator(x: Seq[ByteString]): Iterator[String] =
+      x.map(_.utf8String).iterator
+
+    val stream = ZeroMQUtils.createStream(
+      ssc,
+      "tcp://192.168.0.4:9999",
+      Subscribe(""),
+      bytesToStringIterator _
+    )
 
     stream.map(x => x.map(y => y.toByte).to[Array])
       .map(x => parseBmsVoltageProtobuf(x))
@@ -202,55 +169,5 @@ object sparkTask {
     println(packet.length)
     packet.foreach(x => print(x.toInt + " "))
     println()
-  }
-}
-
-class CustomReceiver(host: String, port: Int)
-  extends Receiver[String](StorageLevel.MEMORY_AND_DISK_2) {
-
-  def onStart() {
-    // Start the thread that receives data over a connection
-    new Thread("Socket Receiver") {
-      override def run() {
-        receive()
-      }
-    }.start()
-  }
-
-  def onStop() {
-    // There is nothing much to do as the thread calling receive()
-    // is designed to stop by itself isStopped() returns false
-  }
-
-  /** Create a socket connection and receive data until receiver is stopped */
-  private def receive() {
-    try {
-      val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.0.4:9999")
-      socket.subscribe("")
-
-      while (true) {
-        val messageOption = socket.recvOption
-        messageOption match {
-          case Some(message) =>
-            for (i <- 0 until message.length) {
-              val messageString = new String(
-                message(i).map(x => if (x < 0) (256 + x).toChar else x.toChar).toArray
-              )
-              store(messageString)
-            }
-          case _ =>
-        }
-      }
-      socket.close
-
-    } catch {
-      case e: IOException =>
-        e.printStackTrace()
-      case e: java.net.ConnectException =>
-        restart("Error connecting to " + host + ":" + port, e)
-      case t: Throwable =>
-        restart("Error receiving data", t)
-    }
   }
 }

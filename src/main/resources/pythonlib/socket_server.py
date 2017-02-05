@@ -67,9 +67,7 @@ class AeroBmsZeromqServer:
 
             # msg = bms_voltage.SerializeToString() + bytes([0])
             msg = bms_voltage.SerializeToString()
-            msg = "\0".encode() + msg + "\0".encode()
             print(list(msg))
-            print(len(msg))
             socket.send(msg)
             time.sleep(1)
             count += 1
@@ -81,6 +79,6 @@ if __name__ == '__main__':
     # HOST, PORT = '192.168.1.72', 9999
     HOST, PORT = '192.168.0.4', 9999
 
-    # AeroBmsZeromqServer.serve_forever(HOST, PORT)
-    with closing(socketserver.TCPServer((HOST, PORT), MockAerobmsServer)) as server:
-        server.serve_forever()
+    AeroBmsZeromqServer.serve_forever(HOST, PORT)
+    # with closing(socketserver.TCPServer((HOST, PORT), MockAerobmsServer)) as server:
+    #     server.serve_forever()

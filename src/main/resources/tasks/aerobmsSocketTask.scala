@@ -1,20 +1,22 @@
+package tasks
+
 import java.io._
-import java.nio.ByteBuffer
 
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
 
 import scala.collection.mutable.ArrayBuffer
+
 import com.datastax.spark.connector.cql.CassandraConnector
 import com.datastax.spark.connector.streaming._
+
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
+
+import java.net.Socket
+
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.receiver.Receiver
-import zeromq.{Message, SocketType, ZeroMQ}
-
-import scala.concurrent.Await
-import scala.concurrent.duration._
 
 
 object sparkTask {
@@ -26,48 +28,12 @@ object sparkTask {
   val sparkMaster = streamSource
   val sparkPort = "7077"
 
-  def storeMessage(message: Message): Unit = {
-    print(message.map(_.utf8String).mkString)
+  def mainSocket(args: Array[String]) = {
+    saveBmsVoltageSocketStreamToCassandra()
+    //    receiveTest()
   }
 
-  def receiveTest() {
-    try {
-
-      val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.0.4:9999")
-      socket.subscribe("")
-
-      while (true) {
-        val messageOption = socket.recvOption
-        messageOption match {
-          case Some(message) =>
-            for (i <- 0 until message.length) {
-              val messageString = new String(
-                message(i).map(x => if (x < 0) (256 + x).toChar else x.toChar).toArray
-              )
-              println(messageString.map(x => x.toInt + " "))
-            }
-          case _ =>
-        }
-      }
-      socket.close
-
-    } catch {
-      case e: IOException =>
-        e.printStackTrace()
-      case e: java.net.ConnectException =>
-      case e: Exception =>
-        e.printStackTrace()
-      case t: Throwable =>
-    }
-  }
-
-  def main(args: Array[String]) = {
-    saveBmsVoltageZmqStreamToCassandra()
-//    receiveTest()
-  }
-
-  def saveBmsVoltageZmqStreamToCassandra(): Unit = {
+  def saveBmsVoltageSocketStreamToCassandra(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Aero BMS")
       .setMaster("spark://" + sparkMaster + ":" + sparkPort)
@@ -225,25 +191,34 @@ class CustomReceiver(host: String, port: Int)
   /** Create a socket connection and receive data until receiver is stopped */
   private def receive() {
     try {
-      val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.0.4:9999")
-      socket.subscribe("")
+      val socket = new Socket("192.168.0.4", 9999)
+      val stream = new DataInputStream(socket.getInputStream)
 
+      val messageBufferLength = 65535
+      val messageBuffer = Array.fill[Byte](messageBufferLength + 1)(1)
+      var bytesRead = 0
+      var messageTailFragment: String = null
       while (true) {
-        val messageOption = socket.recvOption
-        messageOption match {
-          case Some(message) =>
-            for (i <- 0 until message.length) {
-              val messageString = new String(
-                message(i).map(x => if (x < 0) (256 + x).toChar else x.toChar).toArray
-              )
-              store(messageString)
-            }
-          case _ =>
-        }
-      }
-      socket.close
+        bytesRead = stream.read(messageBuffer)
+        val receivedString = new String(
+          messageBuffer.slice(0, bytesRead)
+            .map(x => if (x < 0) 256 + x else x).map(_.toChar)
+        )
+        val messages = receivedString.split("\0")
 
+        if (messages(0) != "") {
+          if (messageTailFragment != "") {
+            messages(0) = messageTailFragment + messages(0)
+          }
+        }
+        if (messages.last != "") {
+          messageTailFragment = messages.last
+        }
+
+        store(messages.to[ArrayBuffer])
+      }
+      stream.close()
+      socket.close()
     } catch {
       case e: IOException =>
         e.printStackTrace()
@@ -253,4 +228,5 @@ class CustomReceiver(host: String, port: Int)
         restart("Error receiving data", t)
     }
   }
+
 }
