@@ -198,7 +198,8 @@ class CustomReceiver(host: String, port: Int)
       val messageBuffer = Array.fill[Byte](messageBufferLength + 1)(1)
       var bytesRead = 0
       var messageTailFragment: String = null
-      while (true) {
+      //      while (true) {
+      while (!isStopped()) {
         bytesRead = stream.read(messageBuffer)
         val receivedString = new String(
           messageBuffer.slice(0, bytesRead)
@@ -224,6 +225,8 @@ class CustomReceiver(host: String, port: Int)
         e.printStackTrace()
       case e: java.net.ConnectException =>
         restart("Error connecting to " + host + ":" + port, e)
+      case e: Exception =>
+        e.printStackTrace()
       case t: Throwable =>
         restart("Error receiving data", t)
     }
