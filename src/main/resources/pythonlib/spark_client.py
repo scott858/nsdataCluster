@@ -103,10 +103,10 @@ class AeroBmsNanomsgServer:
 if __name__ == '__main__':
     # HOST, PORT = '192.168.0.4', 9999
     # HOST, PORT = '172.16.0.15', 9999
-    # HOST, PORT = '192.168.1.72', 9999
-    HOST, PORT = '192.168.0.4', 9999
+    # HOST, PORT = '192.168.0.4', 9999
+    HOST, PORT = '192.168.1.72', 9999
 
-    AeroBmsNanomsgServer.serve_forever(HOST, PORT)
-    # AeroBmsZeromqServer.serve_forever(HOST, PORT)
+    # AeroBmsNanomsgServer.serve_forever(HOST, PORT)
+    AeroBmsZeromqServer.serve_forever(HOST, PORT)
     # with closing(socketserver.TCPServer((HOST, PORT), MockAerobmsServer)) as server:
     #     server.serve_forever()

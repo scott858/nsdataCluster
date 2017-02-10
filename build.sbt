@@ -28,7 +28,6 @@ lazy val app = (project in file(".")).
     libraryDependencies += "org.apache.cassandra" % "cassandra-clientutil" % "3.9" intransitive(),
     libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.3" intransitive(),
     libraryDependencies += "com.trueaccord.scalapb" %% "compilerplugin" % "0.5.47",
-    //    libraryDependencies += "org.zeromq" % "jzmq" % "3.1.0",
     libraryDependencies += "org.zeromq" % "jeromq" % "0.3.5",
     libraryDependencies += "com.mdialog" %% "scala-zeromq" % "1.1.1"
   )
