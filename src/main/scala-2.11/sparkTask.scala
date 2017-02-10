@@ -3,6 +3,7 @@ import java.nio.ByteBuffer
 
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
+import timing_packets.timing_packets._
 
 import scala.collection.mutable.ArrayBuffer
 import com.datastax.spark.connector.cql.CassandraConnector
@@ -10,6 +11,7 @@ import com.datastax.spark.connector.streaming._
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.storage.StorageLevel
+import org.apache.spark.streaming.dstream.ReceiverInputDStream
 import org.apache.spark.streaming.receiver.Receiver
 import zeromq.{Message, SocketType, ZeroMQ}
 
@@ -59,11 +61,6 @@ object sparkTask {
   }
 
   def main(args: Array[String]) = {
-    saveBmsVoltageZmqStreamToCassandra()
-    //    receiveTest()
-  }
-
-  def saveBmsVoltageZmqStreamToCassandra(): Unit = {
     val conf = new SparkConf(true)
       .setAppName("Aero BMS")
       .setMaster("spark://" + sparkMaster + ":" + sparkPort)
@@ -73,13 +70,85 @@ object sparkTask {
       .set("spark.cleaner.ttl", "3600")
 
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
-    setupSchema(cc)
 
     val ssc = new StreamingContext(conf, Seconds(4))
     ssc.sparkContext.setLogLevel("WARN")
 
     val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
 
+    saveNetworkTimingPacketToCassandra(ssc, cc, stream)
+//    saveBmsVoltageZmqStreamToCassandra(ssc, cc, stream)
+//    receiveTest()
+  }
+
+  def saveNetworkTimingPacketToCassandra(ssc: StreamingContext,
+                                         cc: CassandraConnector,
+                                         stream: ReceiverInputDStream[String]): Unit = {
+    setupNetworkTimingSchema(cc)
+    stream.map(x => x.map(y => y.toByte).to[Array])
+      .map(x => parseNetworkTimingPacketProtobuf(x))
+      .saveToCassandra("aeronetwork", "timing_packet")
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  def parseNetworkTimingPacketProtobuf(packet: Array[Byte]): TimingPacket = {
+    try {
+      if (packet.length > 0) {
+        TimingPacket.parseFrom(packet)
+      } else {
+        zeroTimingPacket()
+      }
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        errorTimingPacket()
+    }
+  }
+
+  def zeroTimingPacket(): TimingPacket = {
+    TimingPacket()
+  }
+
+  def errorTimingPacket(): TimingPacket = {
+    TimingPacket(
+      clientId = Option("error"),
+      packetId = Option(1)
+    )
+  }
+
+  def setupNetworkTimingSchema(cc: CassandraConnector): Unit = {
+    cc.withSessionDo { session =>
+      session.execute("create keyspace if not exists " +
+        "aeronetwork " +
+        "with " +
+        "replication = {'class': 'SimpleStrategy', 'replication_factor': 1}")
+    }
+
+    cc.withSessionDo(session => session.execute("use aeronetwork"))
+
+    cc.withSessionDo(session =>
+      session.execute("drop table if exists " +
+        "timing_packet")
+    )
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "aeronetwork.timing_packet ( " +
+        "client_id text, " +
+        "packet_id int, " +
+        "time_sent int, " +
+        "response_time int, " +
+        "primary key((client_id, packet_id), time_sent));")
+    }
+
+  }
+
+  def saveBmsVoltageZmqStreamToCassandra(ssc: StreamingContext,
+                                         cc: CassandraConnector,
+                                         stream: ReceiverInputDStream[String]): Unit = {
+    setupBmsVoltageSchema(cc)
     stream.map(x => x.map(y => y.toByte).to[Array])
       .map(x => parseBmsVoltageProtobuf(x))
       .saveToCassandra("aerobms", "cell_voltages")
@@ -150,7 +219,7 @@ object sparkTask {
     )
   }
 
-  def setupSchema(cc: CassandraConnector): Unit = {
+  def setupBmsVoltageSchema(cc: CassandraConnector): Unit = {
     cc.withSessionDo { session =>
       session.execute("create keyspace if not exists " +
         "aerobms " +
@@ -189,8 +258,6 @@ object sparkTask {
         "voltage_15 int, " +
         "primary key((real_time, device_id), cpu_time));")
     }
-
-
   }
 
   def printPacket(packet: String): Unit = {
