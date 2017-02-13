@@ -21,7 +21,7 @@ import scala.concurrent.duration._
 
 object sparkTask {
 
-  val streamSource = "192.168.1.72"
+  val streamSource = "192.168.0.4"
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
     "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
@@ -289,7 +289,7 @@ class CustomReceiver(host: String, port: Int)
   private def receive() {
     try {
       val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.1.72:9999")
+      socket.connect("tcp://192.168.0.4:9999")
       socket.subscribe("")
 
       while (!isStopped()) {
