@@ -3,6 +3,10 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.11.8"
 )
 
+packAutoSettings
+
+updateOptions := updateOptions.value.withCachedResolution(true)
+
 PB.targets in Compile := Seq(
   scalapb.gen() -> (sourceManaged in Compile).value
 )
