@@ -3,6 +3,7 @@ syntax = "proto2";
 package timing_packets;
 
 message TimingPacket{
+    optional int64  time_bucket = 5;
     optional string client_id = 1;
     optional int64  packet_id = 2;
     optional int64  time_sent = 3;

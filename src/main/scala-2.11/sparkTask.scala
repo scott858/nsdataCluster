@@ -1,6 +1,8 @@
 import java.io._
 import java.nio.ByteBuffer
 
+import com.github.nscala_time.time.Imports._
+
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
 import timing_packets.timing_packets._
@@ -77,8 +79,6 @@ object sparkTask {
     val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
 
     saveNetworkTimingPacketToCassandra(ssc, cc, stream)
-//    saveBmsVoltageZmqStreamToCassandra(ssc, cc, stream)
-//    receiveTest()
   }
 
   def saveNetworkTimingPacketToCassandra(ssc: StreamingContext,
@@ -94,9 +94,12 @@ object sparkTask {
   }
 
   def parseNetworkTimingPacketProtobuf(packet: Array[Byte]): TimingPacket = {
+    val timeNow = DateTime.now.getHourOfDay
     try {
       if (packet.length > 0) {
-        TimingPacket.parseFrom(packet)
+        val timingPacket = TimingPacket.parseFrom(packet)
+        timingPacket.update(_.timeBucket := timeNow.toLong)
+//        TimingPacket.parseFrom(packet)
       } else {
         zeroTimingPacket()
       }

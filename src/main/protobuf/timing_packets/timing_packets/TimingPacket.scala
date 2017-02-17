@@ -9,6 +9,7 @@ package timing_packets.timing_packets
 
 @SerialVersionUID(0L)
 final case class TimingPacket(
+    timeBucket: scala.Option[Long] = None,
     clientId: scala.Option[String] = None,
     packetId: scala.Option[Long] = None,
     timeSent: scala.Option[Long] = None,
@@ -18,6 +19,7 @@ final case class TimingPacket(
     private[this] var __serializedSizeCachedValue: Int = 0
     private[this] def __computeSerializedValue(): Int = {
       var __size = 0
+      if (timeBucket.isDefined) { __size += _root_.com.google.protobuf.CodedOutputStream.computeInt64Size(5, timeBucket.get) }
       if (clientId.isDefined) { __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(1, clientId.get) }
       if (packetId.isDefined) { __size += _root_.com.google.protobuf.CodedOutputStream.computeInt64Size(2, packetId.get) }
       if (timeSent.isDefined) { __size += _root_.com.google.protobuf.CodedOutputStream.computeInt64Size(3, timeSent.get) }
@@ -45,8 +47,12 @@ final case class TimingPacket(
       responseTime.foreach { __v =>
         _output__.writeInt64(4, __v)
       };
+      timeBucket.foreach { __v =>
+        _output__.writeInt64(5, __v)
+      };
     }
     def mergeFrom(`_input__`: _root_.com.google.protobuf.CodedInputStream): timing_packets.timing_packets.TimingPacket = {
+      var __timeBucket = this.timeBucket
       var __clientId = this.clientId
       var __packetId = this.packetId
       var __timeSent = this.timeSent
@@ -56,6 +62,8 @@ final case class TimingPacket(
         val _tag__ = _input__.readTag()
         _tag__ match {
           case 0 => _done__ = true
+          case 40 =>
+            __timeBucket = Some(_input__.readInt64())
           case 10 =>
             __clientId = Some(_input__.readString())
           case 16 =>
@@ -68,12 +76,16 @@ final case class TimingPacket(
         }
       }
       timing_packets.timing_packets.TimingPacket(
+          timeBucket = __timeBucket,
           clientId = __clientId,
           packetId = __packetId,
           timeSent = __timeSent,
           responseTime = __responseTime
       )
     }
+    def getTimeBucket: Long = timeBucket.getOrElse(0L)
+    def clearTimeBucket: TimingPacket = copy(timeBucket = None)
+    def withTimeBucket(__v: Long): TimingPacket = copy(timeBucket = Some(__v))
     def getClientId: String = clientId.getOrElse("")
     def clearClientId: TimingPacket = copy(clientId = None)
     def withClientId(__v: String): TimingPacket = copy(clientId = Some(__v))
@@ -88,6 +100,7 @@ final case class TimingPacket(
     def withResponseTime(__v: Long): TimingPacket = copy(responseTime = Some(__v))
     def getField(__field: _root_.com.google.protobuf.Descriptors.FieldDescriptor): scala.Any = {
       __field.getNumber match {
+        case 5 => timeBucket.orNull
         case 1 => clientId.orNull
         case 2 => packetId.orNull
         case 3 => timeSent.orNull
@@ -104,10 +117,11 @@ object TimingPacket extends com.trueaccord.scalapb.GeneratedMessageCompanion[tim
     require(__fieldsMap.keys.forall(_.getContainingType() == javaDescriptor), "FieldDescriptor does not match message type.")
     val __fields = javaDescriptor.getFields
     timing_packets.timing_packets.TimingPacket(
-      __fieldsMap.get(__fields.get(0)).asInstanceOf[scala.Option[String]],
-      __fieldsMap.get(__fields.get(1)).asInstanceOf[scala.Option[Long]],
+      __fieldsMap.get(__fields.get(0)).asInstanceOf[scala.Option[Long]],
+      __fieldsMap.get(__fields.get(1)).asInstanceOf[scala.Option[String]],
       __fieldsMap.get(__fields.get(2)).asInstanceOf[scala.Option[Long]],
-      __fieldsMap.get(__fields.get(3)).asInstanceOf[scala.Option[Long]]
+      __fieldsMap.get(__fields.get(3)).asInstanceOf[scala.Option[Long]],
+      __fieldsMap.get(__fields.get(4)).asInstanceOf[scala.Option[Long]]
     )
   }
   def javaDescriptor: _root_.com.google.protobuf.Descriptors.Descriptor = TimingPacketsProto.javaDescriptor.getMessageTypes.get(0)
@@ -116,6 +130,8 @@ object TimingPacket extends com.trueaccord.scalapb.GeneratedMessageCompanion[tim
   lazy val defaultInstance = timing_packets.timing_packets.TimingPacket(
   )
   implicit class TimingPacketLens[UpperPB](_l: _root_.com.trueaccord.lenses.Lens[UpperPB, timing_packets.timing_packets.TimingPacket]) extends _root_.com.trueaccord.lenses.ObjectLens[UpperPB, timing_packets.timing_packets.TimingPacket](_l) {
+    def timeBucket: _root_.com.trueaccord.lenses.Lens[UpperPB, Long] = field(_.getTimeBucket)((c_, f_) => c_.copy(timeBucket = Some(f_)))
+    def optionalTimeBucket: _root_.com.trueaccord.lenses.Lens[UpperPB, scala.Option[Long]] = field(_.timeBucket)((c_, f_) => c_.copy(timeBucket = f_))
     def clientId: _root_.com.trueaccord.lenses.Lens[UpperPB, String] = field(_.getClientId)((c_, f_) => c_.copy(clientId = Some(f_)))
     def optionalClientId: _root_.com.trueaccord.lenses.Lens[UpperPB, scala.Option[String]] = field(_.clientId)((c_, f_) => c_.copy(clientId = f_))
     def packetId: _root_.com.trueaccord.lenses.Lens[UpperPB, Long] = field(_.getPacketId)((c_, f_) => c_.copy(packetId = Some(f_)))
@@ -125,6 +141,7 @@ object TimingPacket extends com.trueaccord.scalapb.GeneratedMessageCompanion[tim
     def responseTime: _root_.com.trueaccord.lenses.Lens[UpperPB, Long] = field(_.getResponseTime)((c_, f_) => c_.copy(responseTime = Some(f_)))
     def optionalResponseTime: _root_.com.trueaccord.lenses.Lens[UpperPB, scala.Option[Long]] = field(_.responseTime)((c_, f_) => c_.copy(responseTime = f_))
   }
+  final val TIME_BUCKET_FIELD_NUMBER = 5
   final val CLIENT_ID_FIELD_NUMBER = 1
   final val PACKET_ID_FIELD_NUMBER = 2
   final val TIME_SENT_FIELD_NUMBER = 3

@@ -33,9 +33,11 @@ lazy val app = (project in file(".")).
     libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.3" intransitive(),
     libraryDependencies += "com.trueaccord.scalapb" %% "compilerplugin" % "0.5.47",
     libraryDependencies += "org.zeromq" % "jeromq" % "0.3.5",
-    libraryDependencies += "com.mdialog" %% "scala-zeromq" % "1.1.1"
+    libraryDependencies += "com.mdialog" %% "scala-zeromq" % "1.1.1",
+    libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "2.16.0",
+    libraryDependencies += "co.theasi" %% "plotly" % "0.2.0",
+    libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.1"
   )
-
 
 assemblyMergeStrategy in assembly := {
   case PathList("javax", "servlet", xs@_*) => MergeStrategy.last
