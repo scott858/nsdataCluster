@@ -1,5 +1,8 @@
 import java.io._
+import java.util.UUID
 import java.nio.ByteBuffer
+
+import com.github.nscala_time.time.Imports._
 
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
@@ -21,11 +24,11 @@ import scala.concurrent.duration._
 
 object sparkTask {
 
-  val streamSource = "192.168.0.4"
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
     "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
-  val sparkMaster = streamSource
+  val streamSource = "10.10.10.12"
+  val sparkMaster = "10.10.10.15"
   val sparkPort = "7077"
 
   def receiveTest() {
@@ -77,8 +80,6 @@ object sparkTask {
     val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
 
     saveNetworkTimingPacketToCassandra(ssc, cc, stream)
-//    saveBmsVoltageZmqStreamToCassandra(ssc, cc, stream)
-//    receiveTest()
   }
 
   def saveNetworkTimingPacketToCassandra(ssc: StreamingContext,
@@ -87,10 +88,25 @@ object sparkTask {
     setupNetworkTimingSchema(cc)
     stream.map(x => x.map(y => y.toByte).to[Array])
       .map(x => parseNetworkTimingPacketProtobuf(x))
+      .map(x => convertTimingPacket(x))
       .saveToCassandra("aeronetwork", "timing_packet")
 
     ssc.start()
     ssc.awaitTermination()
+  }
+
+  case class UuidTimingPacket(timeBucket: Long, experimentId: UUID, clientId: String,
+                              packetId: Long, timeSent: Long, responseTime: Long)
+
+  def convertTimingPacket(packet: TimingPacket): UuidTimingPacket = {
+    UuidTimingPacket(
+      timeBucket = packet.timeBucket.get,
+      experimentId = UUID.fromString(packet.experimentId.get),
+      clientId = packet.clientId.get,
+      packetId = packet.packetId.get,
+      timeSent = packet.timeSent.get,
+      responseTime = packet.responseTime.get
+    )
   }
 
   def parseNetworkTimingPacketProtobuf(packet: Array[Byte]): TimingPacket = {
@@ -128,19 +144,35 @@ object sparkTask {
 
     cc.withSessionDo(session => session.execute("use aeronetwork"))
 
-    cc.withSessionDo(session =>
-      session.execute("drop table if exists " +
-        "timing_packet")
-    )
+//    cc.withSessionDo(session =>
+//      session.execute("drop table if exists " +
+//        "experiments")
+//    )
+//
+//    cc.withSessionDo(session =>
+//      session.execute("drop table if exists " +
+//        "timing_packet")
+//    )
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "aeronetwork.experiments( " +
+        "experiment_id uuid, " +
+        "time timestamp, " +
+        "description text, " +
+        "primary key((experiment_id, time)));")
+    }
 
     cc.withSessionDo { session =>
       session.execute("create table if not exists " +
         "aeronetwork.timing_packet ( " +
+        "time_bucket timestamp, " +
+        "experiment_id uuid, " +
         "client_id text, " +
-        "packet_id int, " +
-        "time_sent int, " +
+        "packet_id bigint, " +
+        "time_sent bigint, " +
         "response_time int, " +
-        "primary key((client_id, packet_id), time_sent));")
+        "primary key((experiment_id, client_id, time_bucket), packet_id, time_sent));")
     }
 
   }
@@ -289,7 +321,7 @@ class CustomReceiver(host: String, port: Int)
   private def receive() {
     try {
       val socket = ZeroMQ.socket(SocketType.Sub)
-      socket.connect("tcp://192.168.0.4:9999")
+      socket.connect("tcp://" + sparkTask.streamSource + ":9999")
       socket.subscribe("")
 
       while (!isStopped()) {

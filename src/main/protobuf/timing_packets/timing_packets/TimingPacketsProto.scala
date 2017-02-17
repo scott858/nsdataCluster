@@ -11,9 +11,10 @@ object TimingPacketsProto {
   lazy val javaDescriptor: com.google.protobuf.Descriptors.FileDescriptor = {
     val proto = com.google.protobuf.DescriptorProtos.FileDescriptorProto.parseFrom(
       com.trueaccord.scalapb.Encoding.fromBase64(scala.collection.Seq(
-  """ChR0aW1pbmdfcGFja2V0cy5wcm90bxIOdGltaW5nX3BhY2tldHMiigEKDFRpbWluZ1BhY2tldBIbCgljbGllbnRfaWQYASABK
-  AlSCGNsaWVudElkEhsKCXBhY2tldF9pZBgCIAEoA1IIcGFja2V0SWQSGwoJdGltZV9zZW50GAMgASgDUgh0aW1lU2VudBIjCg1yZ
-  XNwb25zZV90aW1lGAQgASgDUgxyZXNwb25zZVRpbWU="""
+  """ChR0aW1pbmdfcGFja2V0cy5wcm90bxIOdGltaW5nX3BhY2tldHMi0AEKDFRpbWluZ1BhY2tldBIfCgt0aW1lX2J1Y2tldBgBI
+  AEoA1IKdGltZUJ1Y2tldBIjCg1leHBlcmltZW50X2lkGAIgASgJUgxleHBlcmltZW50SWQSGwoJY2xpZW50X2lkGAMgASgJUghjb
+  GllbnRJZBIbCglwYWNrZXRfaWQYBCABKANSCHBhY2tldElkEhsKCXRpbWVfc2VudBgFIAEoA1IIdGltZVNlbnQSIwoNcmVzcG9uc
+  2VfdGltZRgGIAEoA1IMcmVzcG9uc2VUaW1l"""
       ).mkString))
     com.google.protobuf.Descriptors.FileDescriptor.buildFrom(proto, Array(
     ))

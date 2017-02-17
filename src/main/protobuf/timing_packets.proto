@@ -3,8 +3,10 @@ syntax = "proto2";
 package timing_packets;
 
 message TimingPacket{
-    optional string client_id = 1;
-    optional int64  packet_id = 2;
-    optional int64  time_sent = 3;
-    optional int64  response_time = 4;
+    optional int64  time_bucket = 1;
+    optional string experiment_id = 2;
+    optional string client_id = 3;
+    optional int64  packet_id = 4;
+    optional int64  time_sent = 5;
+    optional int64  response_time = 6;
 }
