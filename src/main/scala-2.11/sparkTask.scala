@@ -110,9 +110,12 @@ object sparkTask {
   }
 
   def parseNetworkTimingPacketProtobuf(packet: Array[Byte]): TimingPacket = {
+    val timeNow = DateTime.now.getHourOfDay
     try {
       if (packet.length > 0) {
-        TimingPacket.parseFrom(packet)
+        val timingPacket = TimingPacket.parseFrom(packet)
+        timingPacket.update(_.timeBucket := timeNow.toLong)
+//        TimingPacket.parseFrom(packet)
       } else {
         zeroTimingPacket()
       }
