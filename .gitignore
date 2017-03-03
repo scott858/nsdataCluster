@@ -1,1 +1,4 @@
-target/scala-2.11/*
+target/
+.idea/
+out/
+*.tar
