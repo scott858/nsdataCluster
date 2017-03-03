@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Implementation-Title: Apache Bahir - Spark Streaming Akka
+Implementation-Version: 2.0.2
+Archiver-Version: Plexus Archiver
+Built-By: ckadner
+Specification-Vendor: The Apache Software Foundation
+Specification-Title: Apache Bahir - Spark Streaming Akka
+Implementation-Vendor-Id: org.apache.bahir
+Implementation-Vendor: The Apache Software Foundation
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_101
+Specification-Version: 2.0.2
+Implementation-URL: http://bahir.apache.org/
+

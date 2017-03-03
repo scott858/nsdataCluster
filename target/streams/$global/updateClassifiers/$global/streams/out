@@ -1,0 +1,318 @@
+[warn] Multiple dependencies with the same organization/name but different versions. To avoid conflict, pick one version:
+[warn]  * org.scala-lang:scala-compiler:(2.11.0, 2.11.8)
+[warn]  * commons-net:commons-net:(2.2, 3.1)
+[warn]  * org.scala-lang.modules:scala-parser-combinators_2.11:(1.0.1, 1.0.4)
+[warn]  * org.scala-lang.modules:scala-xml_2.11:(1.0.2, 1.0.4)
+[debug] :: building artificial module descriptors from nsdatacluster#nsdatacluster$sources_2.11;1.0
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3e2713f6 (artifacts: scala-library:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@37418c1 (artifacts: scalapb-runtime_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@70df4fdc (artifacts: protobuf-java:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1a3cd02c (artifacts: fastparse_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@469554cb (artifacts: fastparse-utils_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6584fec8 (artifacts: sourcecode_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6fafec0b (artifacts: lenses_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@136eec62 (artifacts: spark-core_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7fb1d1c8 (artifacts: commons-crypto:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3d010248 (artifacts: py4j:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2dde7e57 (artifacts: pyrolite:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@49b78a72 (artifacts: ivy:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@38f92d1d (artifacts: jackson-module-scala_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@ddf7b08 (artifacts: jackson-module-paranamer:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@532d9022 (artifacts: metrics-graphite:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@263c742f (artifacts: metrics-json:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@575c2430 (artifacts: metrics-jvm:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@21ad02e8 (artifacts: stream:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1ebe2a7f (artifacts: netty:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5be6a88b (artifacts: jersey-container-servlet:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6dad7a63 (artifacts: jersey-container-servlet-core:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@245e8f7c (artifacts: jersey-server:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4bdcb45a (artifacts: validation-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2510ef5a (artifacts: jersey-media-jaxb:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2368f7f9 (artifacts: jersey-client:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@739db987 (artifacts: jersey-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5d4dbdca (artifacts: hk2-locator:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7f85e306 (artifacts: javassist:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1b361430 (artifacts: javax.inject:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@579d750 (artifacts: hk2-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@35ea89d8 (artifacts: aopalliance-repackaged:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@65a7d1b0 (artifacts: hk2-utils:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4e1bdea0 (artifacts: osgi-resource-locator:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5934364 (artifacts: jersey-guava:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@64d6ae47 (artifacts: javax.annotation-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3fa7c93c (artifacts: javax.ws.rs-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2fd9eeb6 (artifacts: json4s-jackson_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@30ce004a (artifacts: json4s-core_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@613b2482 (artifacts: scalap:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6054ffb0 (artifacts: scala-compiler:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@180152 (artifacts: scala-parser-combinators_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@40148d4b (artifacts: paranamer:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7833aeff (artifacts: json4s-ast_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: dependency: commons-net#commons-net;2.2 {compile=[default(compile)]} (artifacts: commons-net:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3f5d7736 (artifacts: RoaringBitmap:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7f0fe31e (artifacts: lz4:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1b955761 (artifacts: snappy-java:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7e3446ba (artifacts: compress-lzf:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2a847a8d (artifacts: jcl-over-slf4j:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2a136bd0 (artifacts: commons-math3:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1b8c1fac (artifacts: javax.servlet-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@47d19bf1 (artifacts: curator-recipes:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4e08c194 (artifacts: curator-framework:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7ff46e6e (artifacts: curator-client:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@47e7f43 (artifacts: jets3t:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4f3b622e (artifacts: spark-unsafe_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@47370e3c (artifacts: spark-network-shuffle_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1bec9faa (artifacts: metrics-core:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6c9f7ff3 (artifacts: spark-network-common_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@78215a5c (artifacts: jackson-annotations:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@798fd8a (artifacts: jackson-databind:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@78f6331c (artifacts: jackson-core:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6f81ab16 (artifacts: leveldbjni-all:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1d00ff00 (artifacts: commons-lang3:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5d343587 (artifacts: netty-all:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@141393ee (artifacts: spark-launcher_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@76284361 (artifacts: spark-tags_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6c4a4a5b (artifacts: unused:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@10aec258 (artifacts: scalatest_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@182abf40 (artifacts: scala-xml_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2c2dd46f (artifacts: scala-reflect:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@128b4b23 (artifacts: jul-to-slf4j:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@74d1f728 (artifacts: slf4j-log4j12:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@39cc864d (artifacts: slf4j-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7b80a3b7 (artifacts: hadoop-mapreduce-client-jobclient:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@331a3db7 (artifacts: hadoop-mapreduce-client-app:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4809f44b (artifacts: hadoop-mapreduce-client-shuffle:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@15aafde9 (artifacts: hadoop-yarn-server-nodemanager:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6bc969f0 (artifacts: hadoop-mapreduce-client-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@95c16bb (artifacts: hadoop-yarn-server-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@e701077 (artifacts: hadoop-mapreduce-client-core:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4cf7f1e5 (artifacts: hadoop-yarn-client:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6c519762 (artifacts: hadoop-yarn-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@551bd9d (artifacts: hadoop-yarn-api:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@bacf6e8 (artifacts: guice:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@782746a1 (artifacts: cglib:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@182d2440 (artifacts: aopalliance:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1098df8d (artifacts: hadoop-hdfs:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7c6f60c0 (artifacts: hadoop-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3e3f33a2 (artifacts: zookeeper:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4fc11f01 (artifacts: hadoop-auth:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@19f3d5c3 (artifacts: commons-configuration:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1e9dcf5d (artifacts: commons-digester:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@59f85d0f (artifacts: commons-beanutils:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1e067826 (artifacts: commons-lang:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@195cfbe8 (artifacts: log4j:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@69cb28b9 (artifacts: oro:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@724000aa (artifacts: commons-io:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5f2a818c (artifacts: commons-codec:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@21d7a23a (artifacts: commons-httpclient:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@11e9d859 (artifacts: commons-math:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@63decf9e (artifacts: commons-cli:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@68730488 (artifacts: guava:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@74a9adce (artifacts: hadoop-annotations:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2bdd8812 (artifacts: xbean-asm5-shaded:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@3eea00c8 (artifacts: chill_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4ecd14d9 (artifacts: chill-java:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@77b30713 (artifacts: kryo-shaded:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@30699cef (artifacts: objenesis:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5eeb266a (artifacts: minlog:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@78a68ab2 (artifacts: avro-mapred:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1742812a (artifacts: avro-ipc:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6b30f9c9 (artifacts: jetty-util:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6c6f5ab3 (artifacts: avro:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2050ae96 (artifacts: commons-compress:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@23983067 (artifacts: xz:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4f8a6b6c (artifacts: javax.inject:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@59a61aec (artifacts: jackson-mapper-asl:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7c273b50 (artifacts: jackson-core-asl:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@1e5e27bb (artifacts: spark-cassandra-connector_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@293fe17 (artifacts: jsr166e:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6b0bf5d3 (artifacts: joda-time:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2eb3ae59 (artifacts: joda-convert:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@413f27cb (artifacts: spark-sql_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5cc10abd (artifacts: parquet-hadoop:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@68d0d99b (artifacts: parquet-jackson:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@5b2273be (artifacts: parquet-format:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@639b066e (artifacts: parquet-column:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@37db6c42 (artifacts: parquet-encoding:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@59297723 (artifacts: parquet-common:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@11de503b (artifacts: spark-catalyst_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@2a4d9c18 (artifacts: antlr4-runtime:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@46184c6f (artifacts: janino:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@541abbe0 (artifacts: commons-compiler:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@372676d0 (artifacts: commons-collections:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@714d9170 (artifacts: spark-sketch_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@75b2d002 (artifacts: univocity-parsers:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7476b0ef (artifacts: spark-streaming_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@7062c847 (artifacts: cassandra-thrift:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@6db9112a (artifacts: cassandra-clientutil:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@ee8ee5f (artifacts: cassandra-driver-core:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4f58d6a5 (artifacts: compilerplugin_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@291e0ff9 (artifacts: protoc-bridge_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@c8b7bb1 (artifacts: jeromq:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4558e669 (artifacts: scala-zeromq_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4c3ced99 (artifacts: akka-actor_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@15844220 (artifacts: config:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@4205f5d2 (artifacts: nscala-time_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: sbt.ivyint.MergedDescriptors@406c3855 (artifacts: commons-net:src:jar:{classifier=sources})
+[debug] ::: dd: dependency: org.scala-lang#scala-compiler;2.11.8 {scala-tool=[default(compile)]} (artifacts: scala-compiler:src:jar:{classifier=sources})
+[debug] ::: dd: dependency: jline#jline;2.12.1 {scala-tool=[default(compile)]} (artifacts: jline:src:jar:{classifier=sources})
+[debug] ::: dd: dependency: org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 {scala-tool=[default(compile)]} (artifacts: scala-parser-combinators_2.11:src:jar:{classifier=sources})
+[debug] ::: dd: dependency: org.scala-lang.modules#scala-xml_2.11;1.0.4 {scala-tool=[default(compile)]} (artifacts: scala-xml_2.11:src:jar:{classifier=sources})
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang/scala-library/2.11.8_temp-resolve-1ad27530d77d9ab74402ddafccc334bf9e398a12/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.trueaccord.scalapb/scalapb-runtime_2.11/0.5.47_temp-resolve-0546a9b1d3f4c8ba8df98285bdfbfc4aff70d4de/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.google.protobuf/protobuf-java/3.1.0_temp-resolve-3230f93aeff4d8d5f3d81013709f6bdedc8f9b69/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.lihaoyi/fastparse_2.11/0.4.2_temp-resolve-5091d90c90f19ef848555fd135a3c14c6c418564/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.lihaoyi/fastparse-utils_2.11/0.4.2_temp-resolve-3afc283a3e70d093b3b495f889bf0e1852a1573b/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.lihaoyi/sourcecode_2.11/0.1.3_temp-resolve-e9a726b97505f54a925de63d0793da7af66c4fdd/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.trueaccord.lenses/lenses_2.11/0.4.9_temp-resolve-9bd4b83e901c6f9855567a56fcf8509cc737cf96/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-core_2.11/2.1.0_temp-resolve-94764a1d45585452c6a505b3d32bfc841c27be1e/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.commons/commons-crypto/1.0.0_temp-resolve-1282605fb75d31f3613520f2c74a10fafd623922/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/net.sf.py4j/py4j/0.10.4_temp-resolve-6d7691a5d29a6880742eec2d8b7e7e6c5509d112/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/net.razorvine/pyrolite/4.13_temp-resolve-055cc67ed6e6bbb13f5efea532bd15c88ac130e0/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.ivy/ivy/2.4.0_temp-resolve-6045e67753b580781d8bcccbd5abd1658efa3b21/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.fasterxml.jackson.module/jackson-module-scala_2.11/2.6.5_temp-resolve-d0cd0e414b453e4826b4ce7a5c33b7ba1018b4ed/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.fasterxml.jackson.module/jackson-module-paranamer/2.6.5_temp-resolve-8fe328a23ed070d9424eb8afa9cfd9a3cf3a3e9d/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.dropwizard.metrics/metrics-graphite/3.1.2_temp-resolve-8e26ab2cf3a88b431d5bc01c9bc657a87132a81a/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.dropwizard.metrics/metrics-json/3.1.2_temp-resolve-5acb9cbe70b5dfed4baf3ce60c188ffb59982128/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.dropwizard.metrics/metrics-jvm/3.1.2_temp-resolve-b947e254fb3baf11a14ae1813622a51f6dbe2f17/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.clearspring.analytics/stream/2.7.0_temp-resolve-c531462533a85f1a5d8a06a504d865bdea7aa77b/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.netty/netty/3.8.0.Final_temp-resolve-bf1ef56b36ae12ac178df3c098b4015aaf6fc113/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.containers/jersey-container-servlet/2.22.2_temp-resolve-f40797e19201a9e000c4347ca2416a5568ec15a1/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.containers/jersey-container-servlet-core/2.22.2_temp-resolve-b34d34bf989e6852b9e0f63e9f6a4968594d95e5/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.core/jersey-server/2.22.2_temp-resolve-d3f131d79db096237d1fe4b8d3fb2ebbd0b48bb2/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/javax.validation/validation-api/1.1.0.Final_temp-resolve-174d1721288db42e4c2fb8dc8993b42667129c56/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.media/jersey-media-jaxb/2.22.2_temp-resolve-f40bbab4e02ef83f58d5313aa45e0a49eaae0e9e/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.core/jersey-client/2.22.2_temp-resolve-bcfb7382bae67cac32e57b0d9fe9f9ba6aede8ee/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.core/jersey-common/2.22.2_temp-resolve-3859089b1fc808d431aaca360b91f268b162801a/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2/hk2-locator/2.4.0-b34_temp-resolve-1480fd6856138e521aa7c6ad3b55c89cd2155146/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.javassist/javassist/3.18.1-GA_temp-resolve-886b038d38bcabbe5898e3a17c5066f5fa3e2516/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2.external/javax.inject/2.4.0-b34_temp-resolve-17cb9f24140e19824d436273636f6e0bc034c2c6/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2/hk2-api/2.4.0-b34_temp-resolve-d8dd424550ca2c4e8c73b563368cafb09a0af037/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2.external/aopalliance-repackaged/2.4.0-b34_temp-resolve-5fe17989efb2ab2f63bfe017c4f3e09f887f71c9/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2/hk2-utils/2.4.0-b34_temp-resolve-1925df3e05a6ee01a9793847c6588a7713a12052/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.hk2/osgi-resource-locator/1.0.1_temp-resolve-0274474e7869367e380130d8a0d22f880cfee71c/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.glassfish.jersey.bundles.repackaged/jersey-guava/2.22.2_temp-resolve-68f5bba2a059c05822f1937c9166bb22c7cfb325/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/javax.annotation/javax.annotation-api/1.2_temp-resolve-85ec990c63f437adf6ba202eef70acf25961b963/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/javax.ws.rs/javax.ws.rs-api/2.0.1_temp-resolve-62578194dd2615b4a3006bc279efe644f5e97269/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.json4s/json4s-jackson_2.11/3.2.11_temp-resolve-cf330ebf5f0fb2177e5a4c10c52aed4aa08329e8/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.json4s/json4s-core_2.11/3.2.11_temp-resolve-2146e7b3403b672202f5be2e10a3cd84b9314c29/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang/scalap/2.11.0_temp-resolve-893880e2d0b47d0e326e00004c6f2372d9f4fc3e/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang/scala-compiler/2.11.0_temp-resolve-af8c86f5328acd5efe6c5122051c6bfbc9606176/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1_temp-resolve-a44182bf4a91134039d37ab5b17150d9988c8180/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.thoughtworks.paranamer/paranamer/2.6_temp-resolve-16235cca034583330979e77da390c1748e0918d2/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.json4s/json4s-ast_2.11/3.2.11_temp-resolve-645f3343ce8ea5d13c5b5d048c9e691ce5677d87/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-net/commons-net/2.2_temp-resolve-e28c424f9ef019d1d8080ac79fe0e7bcffef20cc/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.roaringbitmap/RoaringBitmap/0.5.11_temp-resolve-86b68110faf989b759b8130145f99064ca927a46/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/net.jpountz.lz4/lz4/1.3.0_temp-resolve-6c2f206371387c04dc3d4db33803eda7554ea20b/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.xerial.snappy/snappy-java/1.1.2.6_temp-resolve-590efb606efb661beb4f25da09a74b8b99410f16/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.ning/compress-lzf/1.0.3_temp-resolve-db528c2f59305b20d71a3d6336c11d08282bc901/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.slf4j/jcl-over-slf4j/1.7.16_temp-resolve-752e51de050a45dd8692d0e5bb8d59d9fb4b0c5f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.commons/commons-math3/3.4.1_temp-resolve-12c6c30e9c3815cf4433a28aefb0c8c9c10cd8b7/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/javax.servlet/javax.servlet-api/3.1.0_temp-resolve-8bbde41eeb2df2ec7d611dc36aa1397b4d94ed00/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.curator/curator-recipes/2.4.0_temp-resolve-4e6c67b48a5953c4a9143758d12b3e957a834c24/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.curator/curator-framework/2.4.0_temp-resolve-967912a035d201cc48a1dbd46a63048acb608787/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.curator/curator-client/2.4.0_temp-resolve-d409757741da62f8f2095b9da2b89cda9a7cf6a9/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/net.java.dev.jets3t/jets3t/0.7.1_temp-resolve-f0e89f1ba87da6a921a32a52689c3a18f25d2ba7/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-unsafe_2.11/2.1.0_temp-resolve-d10f90f8d2ec9ac5d446dd65d1fb5b9b79faedb3/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-network-shuffle_2.11/2.1.0_temp-resolve-6fcde40666f4abf555d5b0d056e1d99a93c548ec/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.dropwizard.metrics/metrics-core/3.1.2_temp-resolve-3555ffb38b91e2baaac29017cdd33fa6493c67a1/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-network-common_2.11/2.1.0_temp-resolve-b7f9a2150216889dd83b8907da4791deaf209b0d/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.fasterxml.jackson.core/jackson-annotations/2.6.5_temp-resolve-63e1a68b7d3c8f38dea433fd357010160088bf8a/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.fasterxml.jackson.core/jackson-databind/2.6.5_temp-resolve-8f2607dd4569b36ef5f09ba8d8a9841594a1d054/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.fasterxml.jackson.core/jackson-core/2.6.5_temp-resolve-fab74fdea4ca2bbdf22985d7fb1f37bc1105da46/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.fusesource.leveldbjni/leveldbjni-all/1.8_temp-resolve-34e2bdae118d2d7f5c514f09490f48bf16711ad4/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.commons/commons-lang3/3.5_temp-resolve-ad8f52ac029d7444917e3115d46f6ec8e44729af/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/io.netty/netty-all/4.0.42.Final_temp-resolve-bd802163648cb1d7ad62b8c289e9d73b94b1f7c8/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-launcher_2.11/2.1.0_temp-resolve-165276ac27e915f6523de42d93e5cf064670ff4d/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-tags_2.11/2.1.0_temp-resolve-a5b18391c24cefbabe9eda9e49573e7e7a370322/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.spark-project.spark/unused/1.0.0_temp-resolve-afd88dae69ca5c0c1ff4bd96dedf7aac58d2adb6/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scalatest/scalatest_2.11/2.2.6_temp-resolve-2b942dd40b5a7418bb9c0e54aa05fe0e77bb3f02/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang.modules/scala-xml_2.11/1.0.2_temp-resolve-36fc244dd2ef740d6bad24901023deb899d80864/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang/scala-reflect/2.11.8_temp-resolve-ac81f72f3bddc93f10e4d83a4e1415d4dc03601f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.slf4j/jul-to-slf4j/1.7.16_temp-resolve-ecd9d86afcc4002dc41a26488890169887153c3c/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.slf4j/slf4j-log4j12/1.7.16_temp-resolve-38ab9094c00104614357f1d76b923e858d391a49/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.slf4j/slf4j-api/1.7.16_temp-resolve-5c7dd8f5a59bb8b31b510f4bdb074cf3081754ec/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-mapreduce-client-jobclient/2.2.0_temp-resolve-10788c52601c820e37a16dc1f2c07ef76dc0c027/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-mapreduce-client-app/2.2.0_temp-resolve-d1a2dbca1cbf6963f4ded8bb8b803f77c18ebd0c/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-mapreduce-client-shuffle/2.2.0_temp-resolve-2c6871cf4fc31c9a6847a4b3d144f08c092347f0/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-yarn-server-nodemanager/2.2.0_temp-resolve-f58e834efc6db4ae91a87628ea646aeb5e0f22d9/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-mapreduce-client-common/2.2.0_temp-resolve-7ae2f4ea06ed775605325ac047e60d8bb85cd8b6/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-yarn-server-common/2.2.0_temp-resolve-fd4ad71a541e4813c3d59d7df48dd539e9759836/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-mapreduce-client-core/2.2.0_temp-resolve-2c420b54a1fa5756df8d9e3b629975b9ad23d5e1/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-yarn-client/2.2.0_temp-resolve-415cbcb8e84be552c23685d957fa84f16d2da3bf/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-yarn-common/2.2.0_temp-resolve-51e78b76d4dc48efd9a4ea38958a18e991b7a3e6/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-yarn-api/2.2.0_temp-resolve-746c608377db9faef61b9ee42b78407697d6b951/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.google.inject/guice/3.0_temp-resolve-e0e53b4dffd50e11a9fbbb28ef3cf6c66bc5e495/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.sonatype.sisu.inject/cglib/2.2.1-v20090111_temp-resolve-8dd608d8bde58694597c0110326bb3887a47078a/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/aopalliance/aopalliance/1.0_temp-resolve-47136e72eb5ba3f6be1adb0d47f0d565b9ba0045/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-hdfs/2.2.0_temp-resolve-089f97b146b194d25e785013333b2447a2705955/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-common/2.2.0_temp-resolve-b84fd1fa33adfdcdb73c58e975c70b9965860383/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.zookeeper/zookeeper/3.4.5_temp-resolve-b15f1c161a5ba89dade7d889407ba404512c93b5/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-auth/2.2.0_temp-resolve-de9b6d54594f11247b6768d955cde517601e2436/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-configuration/commons-configuration/1.6_temp-resolve-b93fc92c6eaace48b36bac70c703b0e00fc38f81/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-digester/commons-digester/1.8_temp-resolve-be1b9db9502c1823b23637699ac85bc4d2189110/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-beanutils/commons-beanutils/1.8.0_temp-resolve-8546e92f01af893c93e8761b8a1242d31f690387/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-lang/commons-lang/2.5_temp-resolve-b0e5c6ee0fc55a5f27a4fbe17c58ec98e8b16294/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/log4j/log4j/1.2.17_temp-resolve-c2abbedaad4e4eb6e811793d267971b9033b9e66/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/oro/oro/2.0.8_temp-resolve-d48a3900c0b99bc0c0fc15a369da27149c9d17ca/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-io/commons-io/2.5_temp-resolve-9b95d0990a1e6506dcb9f5d8e8b1cc1653284e09/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-codec/commons-codec/1.10_temp-resolve-cdf67d48ad13d10aa76cf5fa8d7f1ae8676a01d0/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-httpclient/commons-httpclient/3.1_temp-resolve-eab5e3cf6531ba96beaa30a3edb4ea5ff990ee1f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.commons/commons-math/2.1_temp-resolve-00af22b747fc54e4ea4132b40945ec03364d9403/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-cli/commons-cli/1.2_temp-resolve-c8956528c6bd95c4b31f532d243c63e0d6d9479e/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.google.guava/guava/14.0.1_temp-resolve-b1f9d239f7e045d015aee0006f0603b1e36eb994/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.hadoop/hadoop-annotations/2.2.0_temp-resolve-6a4d138e2ed290bd8666e8dbaaa41ca7a237bb9d/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.xbean/xbean-asm5-shaded/4.4_temp-resolve-8f5195bd7d488502d76a60ae6f2229a0c11ef4f1/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.twitter/chill_2.11/0.8.0_temp-resolve-43eb35ba3157fd3fe51ea35edf16b517d339d607/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.twitter/chill-java/0.8.0_temp-resolve-78a112dbf51f45c036e70c9cbb53ecbb5850474c/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.esotericsoftware/kryo-shaded/3.0.3_temp-resolve-6c68336504c91652e0b7b6b0e9a87db37986eede/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.objenesis/objenesis/2.1_temp-resolve-4cc5c02bca15d7da16b725c78351744a8dd84c29/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.esotericsoftware/minlog/1.3.0_temp-resolve-ba36a7e9df78e2ce3f984ae87f73648913d878b8/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.avro/avro-mapred/1.7.7_temp-resolve-6f5fb7600b421cd0bcfe5f3ce13c6d9c3a8863c4/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.avro/avro-ipc/1.7.7_temp-resolve-ecec0b78c9e20c0a1d3757eb27d2f898261322f5/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.mortbay.jetty/jetty-util/6.1.26_temp-resolve-49c8676504d9e5572b0c21def71af454391cab77/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.avro/avro/1.7.7_temp-resolve-550065c2cf5b9b716fefff56e374a89c8d534703/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.commons/commons-compress/1.4.1_temp-resolve-c5d31a7dcf46caba1e1d1bb85371e79b05a3e895/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.tukaani/xz/1.0_temp-resolve-9fe103f4aafe4cddba881ef12a903e192fa3a809/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/javax.inject/javax.inject/1_temp-resolve-d5a2a7aa3370d73a000fc5ac77df7b9f6e3e8dcb/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.codehaus.jackson/jackson-mapper-asl/1.9.13_temp-resolve-3be57cfddd3e375cc27f9a8ae230b52392cb2e5c/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.codehaus.jackson/jackson-core-asl/1.9.13_temp-resolve-5d5a34ffbac5e1e92f22db9723626f94f8398bb6/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.datastax.spark/spark-cassandra-connector_2.11/2.0.0-M2_temp-resolve-7b0dd455e3f55ed752b73e3acbecd353f3031457/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.twitter/jsr166e/1.1.0_temp-resolve-c7ccdddfd304bf27f92e0f4d5bb9415cd03b74bc/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/joda-time/joda-time/2.9.7_temp-resolve-fa84f3fe71994aa977db650759e1aab3cd367e80/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.joda/joda-convert/1.2_temp-resolve-f89809b17f5cd72d3052e3fddd5ae096be1ac36d/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-sql_2.11/2.1.0_temp-resolve-e0a8255b7f64a4963de5957034bdeaa52228ead8/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-hadoop/1.8.1_temp-resolve-077bc773b61001aef47f37c31a4e5788d13b081f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-jackson/1.8.1_temp-resolve-3d98f855873d836f08e540504e3c1bd76d4b76f8/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-format/2.3.0-incubating_temp-resolve-f103345975c7858caae7f359db99c85fe56cb74a/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-column/1.8.1_temp-resolve-6c07db0dbcbe4413612fb1da8a1f4f8731f58e67/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-encoding/1.8.1_temp-resolve-bd1fd6010d9af85746eb392c1ee538cbb8274557/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.parquet/parquet-common/1.8.1_temp-resolve-44332db9032783d06b25e2f42444182e4a333ec2/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-catalyst_2.11/2.1.0_temp-resolve-4563edb3e6c5331ef508efc7eb11547b4327a94f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.antlr/antlr4-runtime/4.5.3_temp-resolve-cf4db4ae79e1fa9d28db348b358a9345bb06b6ec/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.codehaus.janino/janino/3.0.0_temp-resolve-19ad2b25220d49dd421b0b0a367077cc5fb199bb/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.codehaus.janino/commons-compiler/3.0.0_temp-resolve-d8439d613576d07052834e0fc49d6845756f6a5f/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-collections/commons-collections/3.2.1_temp-resolve-21d43495591a9451882d433fcf35db58d2c698e7/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-sketch_2.11/2.1.0_temp-resolve-1927355de81d4ff3fc78992f6fb2fc33accd5214/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.univocity/univocity-parsers/2.2.1_temp-resolve-3ea38bbb6ef39881566c47aa6022e0e151bda232/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.spark/spark-streaming_2.11/2.1.0_temp-resolve-8ed1a1cc4921e16f99dc6bac9dafcba4de0792f1/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.cassandra/cassandra-thrift/3.9_temp-resolve-d6e1b0d905d572195d958066bf8a38d6282b0c10/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.apache.cassandra/cassandra-clientutil/3.9_temp-resolve-b11004148704b70a6efaf9154a629983e1e558dc/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.datastax.cassandra/cassandra-driver-core/3.1.3_temp-resolve-b8b01f6471edfaf4797fe07a5f3f05e9f908ec77/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.trueaccord.scalapb/compilerplugin_2.11/0.5.47_temp-resolve-d5f9d6df9938f4a66198b58b654eb4bc05aebc46/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.trueaccord.scalapb/protoc-bridge_2.11/0.2.5_temp-resolve-cfa352263ce54ab69f95924a9f1eaad42c069f58/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.zeromq/jeromq/0.3.5_temp-resolve-47ff4cf0d38baf3206fffbf2e705f9728a30fd21/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.mdialog/scala-zeromq_2.11/1.1.1_temp-resolve-77e7ae5a78d9248e1b65c469db5e4010f15f1907/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.typesafe.akka/akka-actor_2.11/2.3.2_temp-resolve-497b5309dcea6e98ff12aa258e5e1f052907a7ae/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.typesafe/config/1.2.0_temp-resolve-c781337528c83d6f1cc8ca220b67e73eb35d9268/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/com.github.nscala-time/nscala-time_2.11/2.16.0_temp-resolve-65504fa7193323c1239a94eb10d92d2066679f12/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/commons-net/commons-net/3.1_temp-resolve-d0cc409f301c0b43cee95c5178bbf972c22bddae/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang/scala-compiler/2.11.8_temp-resolve-7408f5bbfdf68f45b26530716defb732f9f228f7/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/jline/jline/2.12.1_temp-resolve-5a097435654a4ceb8605064fed7d16f7eeb2531b/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang.modules/scala-parser-combinators_2.11/1.0.4_temp-resolve-b8d7b05f3489463fb641efac2131820c9f14c451/graphs/graph.json
+[debug] parsing /home/slee/.sbt/0.13/dependency/module/static/org.scala-lang.modules/scala-xml_2.11/1.0.4_temp-resolve-aba0021ba8d44661d2f52bdd77a207564d7f47c8/graphs/graph.json
+[debug] :: merging update reports
+[debug] - conflict in runtime:commons-net:commons-net (commons-net:commons-net:3.1, commons-net:commons-net:2.2)
+[debug] - conflict in test:commons-net:commons-net (commons-net:commons-net:3.1, commons-net:commons-net:2.2)
+[debug] - conflict in compile-internal:commons-net:commons-net (commons-net:commons-net:3.1, commons-net:commons-net:2.2)
+[debug] - conflict in runtime-internal:commons-net:commons-net (commons-net:commons-net:3.1, commons-net:commons-net:2.2)
+[debug] - conflict in test-internal:commons-net:commons-net (commons-net:commons-net:3.1, commons-net:commons-net:2.2)

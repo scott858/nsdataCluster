@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: scala-zeromq
+Implementation-Version: 1.1.1
+Specification-Vendor: com.mdialog
+Specification-Title: scala-zeromq
+Implementation-Vendor-Id: com.mdialog
+Specification-Version: 1.1.1
+Implementation-Vendor: com.mdialog
+

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package bms_voltage;
+
+message BmsVoltage {
+    int32 id = 1;
+    int64 time = 2;
+    int32 voltage_0 = 3;
+    int32 voltage_1 = 4;
+    int32 voltage_2 = 5;
+    int32 voltage_3 = 6;
+    int32 voltage_4 = 7;
+    int32 voltage_5 = 8;
+    int32 voltage_6 = 9;
+    int32 voltage_7 = 10;
+    int32 voltage_8 = 11;
+    int32 voltage_9 = 12;
+    int32 voltage_10 = 13;
+    int32 voltage_11 = 14;
+    int32 voltage_12 = 15;
+    int32 voltage_13 = 16;
+    int32 voltage_14 = 17;
+    int32 voltage_15 = 18;
+}

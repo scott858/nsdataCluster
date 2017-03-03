@@ -6,7 +6,7 @@ import com.github.nscala_time.time.Imports._
 
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
-import timing_packets.timing_packets._
+import aero_network.aero_network._
 
 import scala.collection.mutable.ArrayBuffer
 import com.datastax.spark.connector.cql.CassandraConnector
@@ -79,65 +79,23 @@ object sparkTask {
 
     val stream = ssc.receiverStream(new CustomReceiver(sparkMaster, 9999))
 
-    saveNetworkTimingPacketToCassandra(ssc, cc, stream)
+    saveNetworkPtp1588TimingPacketToCassandra(ssc, cc, stream)
   }
 
-  def saveNetworkTimingPacketToCassandra(ssc: StreamingContext,
-                                         cc: CassandraConnector,
-                                         stream: ReceiverInputDStream[String]): Unit = {
-    setupNetworkTimingSchema(cc)
+  def saveNetworkSoftwareTimingPacketToCassandra(ssc: StreamingContext,
+                                                 cc: CassandraConnector,
+                                                 stream: ReceiverInputDStream[String]): Unit = {
+    setupNetworkSoftwareTimingSchema(cc)
     stream.map(x => x.map(y => y.toByte).to[Array])
-      .map(x => parseNetworkTimingPacketProtobuf(x))
-      .map(x => convertTimingPacket(x))
-      .saveToCassandra("aeronetwork", "timing_packet")
+      .map(x => parseSoftwareNetworkPacketProtobuf(x))
+      .map(x => ConvertSoftwareTimingPacket(x))
+      .saveToCassandra("aeronetwork", "software_timing_packet")
 
     ssc.start()
     ssc.awaitTermination()
   }
 
-  case class UuidTimingPacket(timeBucket: Long, experimentId: UUID, clientId: String,
-                              packetId: Long, timeSent: Long, responseTime: Long)
-
-  def convertTimingPacket(packet: TimingPacket): UuidTimingPacket = {
-    UuidTimingPacket(
-      timeBucket = packet.timeBucket.get,
-      experimentId = UUID.fromString(packet.experimentId.get),
-      clientId = packet.clientId.get,
-      packetId = packet.packetId.get,
-      timeSent = packet.timeSent.get,
-      responseTime = packet.responseTime.get
-    )
-  }
-
-  def parseNetworkTimingPacketProtobuf(packet: Array[Byte]): TimingPacket = {
-    val timeNow = DateTime.now.getHourOfDay
-    try {
-      if (packet.length > 0) {
-        val timingPacket = TimingPacket.parseFrom(packet)
-        timingPacket.update(_.timeBucket := timeNow.toLong)
-//        TimingPacket.parseFrom(packet)
-      } else {
-        zeroTimingPacket()
-      }
-    } catch {
-      case e: Exception =>
-        e.printStackTrace()
-        errorTimingPacket()
-    }
-  }
-
-  def zeroTimingPacket(): TimingPacket = {
-    TimingPacket()
-  }
-
-  def errorTimingPacket(): TimingPacket = {
-    TimingPacket(
-      clientId = Option("error"),
-      packetId = Option(1)
-    )
-  }
-
-  def setupNetworkTimingSchema(cc: CassandraConnector): Unit = {
+  def setupNetworkSoftwareTimingSchema(cc: CassandraConnector): Unit = {
     cc.withSessionDo { session =>
       session.execute("create keyspace if not exists " +
         "aeronetwork " +
@@ -147,15 +105,15 @@ object sparkTask {
 
     cc.withSessionDo(session => session.execute("use aeronetwork"))
 
-//    cc.withSessionDo(session =>
-//      session.execute("drop table if exists " +
-//        "experiments")
-//    )
-//
-//    cc.withSessionDo(session =>
-//      session.execute("drop table if exists " +
-//        "timing_packet")
-//    )
+    //    cc.withSessionDo(session =>
+    //      session.execute("drop table if exists " +
+    //        "experiments")
+    //    )
+    //
+    //    cc.withSessionDo(session =>
+    //      session.execute("drop table if exists " +
+    //        "timing_packet")
+    //    )
 
     cc.withSessionDo { session =>
       session.execute("create table if not exists " +
@@ -168,7 +126,7 @@ object sparkTask {
 
     cc.withSessionDo { session =>
       session.execute("create table if not exists " +
-        "aeronetwork.timing_packet ( " +
+        "aeronetwork.software_timing_packet( " +
         "time_bucket timestamp, " +
         "experiment_id uuid, " +
         "client_id text, " +
@@ -178,6 +136,178 @@ object sparkTask {
         "primary key((experiment_id, client_id, time_bucket), packet_id, time_sent));")
     }
 
+  }
+
+  case class UuidSoftwareTimingPacket(timeBucket: Long, experimentId: UUID, clientId: String,
+                                      packetId: Long, timeSent: Long, responseTime: Long)
+
+  def ConvertSoftwareTimingPacket(packet: SoftwareTimingPacket): UuidSoftwareTimingPacket = {
+    UuidSoftwareTimingPacket(
+      timeBucket = packet.timeBucket.get,
+      experimentId = UUID.fromString(packet.experimentId.get),
+      clientId = packet.clientId.get,
+      packetId = packet.packetId.get,
+      timeSent = packet.timeSent.get,
+      responseTime = packet.responseTime.get
+    )
+  }
+
+  def parseSoftwareNetworkPacketProtobuf(packet: Array[Byte]): SoftwareTimingPacket = {
+    try {
+      if (packet.length > 0) {
+        SoftwareTimingPacket.parseFrom(packet)
+      } else {
+        ZeroSoftwareTimingPacket()
+      }
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        ErrorSoftwareTimingPacket()
+    }
+  }
+
+  def ZeroSoftwareTimingPacket(): SoftwareTimingPacket = {
+    SoftwareTimingPacket()
+  }
+
+  def ErrorSoftwareTimingPacket(): SoftwareTimingPacket = {
+    SoftwareTimingPacket(
+      clientId = Option("error"),
+      packetId = Option(1)
+    )
+  }
+
+  def setupNetworkPTP1588TimingSchema(cc: CassandraConnector): Unit = {
+    cc.withSessionDo { session =>
+      session.execute("create keyspace if not exists " +
+        "aeronetwork " +
+        "with " +
+        "replication = {'class': 'SimpleStrategy', 'replication_factor': 1}")
+    }
+
+    cc.withSessionDo(session => session.execute("use aeronetwork"))
+
+    //    cc.withSessionDo(session =>
+    //      session.execute("drop table if exists " +
+    //        "experiments")
+    //    )
+    //
+    //    cc.withSessionDo(session =>
+    //      session.execute("drop table if exists " +
+    //        "timing_packet")
+    //    )
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "aeronetwork.experiments( " +
+        "experiment_id uuid, " +
+        "time timestamp, " +
+        "description text, " +
+        "primary key((experiment_id, time)));")
+    }
+
+    cc.withSessionDo { session =>
+      session.execute("create table if not exists " +
+        "aeronetwork.ptp1588_timing_packet( " +
+        "time_bucket timestamp, " +
+        "experiment_id uuid, " +
+        "mac_address bigint, " +
+        "sync_receive_s int, " +
+        "sync_receive_ns int, " +
+        "delay_request_send_s int, " +
+        "delay_request_send_ns int, " +
+        "delay_request_receive_s int, " +
+        "delay_request_receive_ns int, " +
+        "offset_from_master_s int, " +
+        "offset_from_master_ns int, " +
+        "mean_path_delay_s int, " +
+        "mean_path_delay_ns int, " +
+        "master_to_slave_delay_s int, " +
+        "master_to_slave_delay_ns int, " +
+        "slave_to_master_delay_s int, " +
+        "slave_to_master_delay_ns int, " +
+        "port_state int, " +
+        "primary key((experiment_id, mac_address, time_bucket), delay_request_receive_s, delay_request_receive_ns));")
+    }
+  }
+
+  def saveNetworkPtp1588TimingPacketToCassandra(ssc: StreamingContext,
+                                                cc: CassandraConnector,
+                                                stream: ReceiverInputDStream[String]): Unit = {
+    setupNetworkPTP1588TimingSchema(cc)
+    stream.map(x => x.map(y => y.toByte).to[Array])
+      .map(x => parsePTP1588NetworkPacketProtobuf(x))
+      .map(x => ConvertPTP1588TimingPacket(x))
+      .saveToCassandra("aeronetwork", "ptp1588_timing_packet")
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+
+  case class UuidPtp1588TimingPacket(timeBucket: Long,
+                                     experimentId: UUID,
+                                     macAddress: Long,
+                                     syncReceiveS: Int,
+                                     syncReceiveNs: Int,
+                                     delayRequestSendS: Int,
+                                     delayRequestSendNs: Int,
+                                     delayRequestReceiveS: Int,
+                                     delayRequestReceiveNs: Int,
+                                     offsetFromMasterS: Int,
+                                     offsetFromMasterNS: Int,
+                                     meanPathDelayS: Int,
+                                     meanPathDelayNs: Int,
+                                     masterToSlaveDelayS: Int,
+                                     masterToSlaveDelayNs: Int,
+                                     slaveToMasterDelayS: Int,
+                                     slaveToMasterDelayNs: Int,
+                                     portState: Int)
+
+  def ConvertPTP1588TimingPacket(packet: Ptp1588TimingPacket): UuidPtp1588TimingPacket = {
+    UuidPtp1588TimingPacket(
+      experimentId = UUID.fromString(packet.experimentId.get),
+      timeBucket = packet.timeBucket.get,
+      macAddress = packet.macAddress.get,
+      syncReceiveS = packet.syncReceiveS.get,
+      syncReceiveNs = packet.syncReceiveNs.get,
+      delayRequestSendS = packet.delayRequestSendS.get,
+      delayRequestSendNs = packet.delayRequestSendNs.get,
+      delayRequestReceiveS = packet.delayRequestReceiveS.get,
+      delayRequestReceiveNs = packet.delayRequestReceiveNs.get,
+      offsetFromMasterS = packet.offsetFromMasterS.get,
+      offsetFromMasterNS = packet.offsetFromMasterNs.get,
+      meanPathDelayS = packet.meanPathDelayS.get,
+      meanPathDelayNs = packet.meanPathDelayNs.get,
+      masterToSlaveDelayS = packet.masterToSlaveDelayS.get,
+      masterToSlaveDelayNs = packet.masterToSlaveDelayNs.get,
+      slaveToMasterDelayS = packet.masterToSlaveDelayS.get,
+      slaveToMasterDelayNs = packet.masterToSlaveDelayNs.get,
+      portState = packet.portState.get
+    )
+  }
+
+  def parsePTP1588NetworkPacketProtobuf(packet: Array[Byte]): Ptp1588TimingPacket = {
+    try {
+      if (packet.length > 0) {
+        Ptp1588TimingPacket.parseFrom(packet)
+      } else {
+        sparkTask.ZeroPtp1588TimingPacket()
+      }
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        ErrorPtp1588TimingPacket()
+    }
+  }
+
+  def ZeroPtp1588TimingPacket(): Ptp1588TimingPacket = {
+    Ptp1588TimingPacket()
+  }
+
+  def ErrorPtp1588TimingPacket(): Ptp1588TimingPacket = {
+    Ptp1588TimingPacket(
+      macAddress = Option(-1)
+    )
   }
 
   def saveBmsVoltageZmqStreamToCassandra(ssc: StreamingContext,

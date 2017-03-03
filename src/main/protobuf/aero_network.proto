@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+package aero_network;
+
+message Ptp1588TimingPacket {
+    optional int64 mac_address = 1;
+    optional int32 sync_receive_s = 2;
+    optional int32 sync_receive_ns = 3;
+    optional int32 delay_request_send_s = 4;
+    optional int32 delay_request_send_ns = 5;
+    optional int32 delay_request_receive_s = 6;
+    optional int32 delay_request_receive_ns = 7;
+    optional int32 offset_from_master_s = 8;
+    optional int32 offset_from_master_ns = 9;
+    optional int32 mean_path_delay_s = 10;
+    optional int32 mean_path_delay_ns= 11;
+    optional int32 master_to_slave_delay_s = 12;
+    optional int32 master_to_slave_delay_ns = 13;
+    optional int32 slave_to_master_delay_s = 14;
+    optional int32 slave_to_master_delay_ns = 15;
+    optional int32 port_state = 16;
+    optional string experiment_id = 17;
+    optional int64  time_bucket = 18;
+}
+
+message SoftwareTimingPacket {
+    optional int64  time_bucket = 1;
+    optional string experiment_id = 2;
+    optional string client_id = 3;
+    optional int64  packet_id = 4;
+    optional int64  time_sent = 5;
+    optional int64  response_time = 6;
+}
