@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1474934809569
+Build-Jdk: 1.8.0_91
+Built-By: teboring
+Bundle-Description: Core Protocol Buffers library. Protocol Buffers are 
+ a way of encoding structured data in an    efficient yet extensible for
+ mat.
+Bundle-DocURL: https://developers.google.com/protocol-buffers/
+Bundle-License: http://www.opensource.org/licenses/bsd-license.php
+Bundle-ManifestVersion: 2
+Bundle-Name: Protocol Buffers [Core]
+Bundle-SymbolicName: com.google.protobuf
+Bundle-Vendor: Google
+Bundle-Version: 3.1.0
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.google.protobuf;version="3.1.0"
+Import-Package: com.google.protobuf;version="[3.1,4)",sun.misc
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.6))"
+Tool: Bnd-3.0.0.201509101326
