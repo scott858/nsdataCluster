@@ -6,7 +6,7 @@ package tasks
 
 import java.util.UUID
 
-import bms_voltage.bms_voltage._
+import bms_voltage._
 
 //import akka.zeromq._
 import java.nio.ByteBuffer

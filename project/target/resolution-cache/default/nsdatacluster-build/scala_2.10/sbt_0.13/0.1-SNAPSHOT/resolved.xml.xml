@@ -4,7 +4,7 @@
 		module="nsdatacluster-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20170311181223"
+		publication="20170313081903"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
