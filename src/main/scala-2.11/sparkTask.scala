@@ -2,7 +2,7 @@ import java.io._
 import java.util.UUID
 import java.nio.ByteBuffer
 
-import com.github.nscala_time.time.Imports._
+//import com.github.nscala_time.time.Imports._
 
 import scala.language.implicitConversions
 import bms_voltage.bms_voltage._
@@ -27,8 +27,10 @@ object sparkTask {
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
     "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
-  val streamSource = "10.10.10.12"
-  val sparkMaster = "10.10.10.15"
+  //  val streamSource = "10.10.10.12"
+  //  val sparkMaster = "10.10.10.15"
+  val streamSource = "192.168.0.2"
+  val sparkMaster = streamSource
   val sparkPort = "7077"
 
   def receiveTest() {

@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: sourcecode
-Implementation-Version: 0.1.3
-Specification-Vendor: com.lihaoyi
-Specification-Title: sourcecode
-Implementation-Vendor-Id: com.lihaoyi
-Specification-Version: 0.1.3
-Implementation-Vendor: com.lihaoyi
-
