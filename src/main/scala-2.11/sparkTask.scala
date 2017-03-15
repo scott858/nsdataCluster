@@ -293,7 +293,7 @@ object sparkTask {
       if (packet.length > 0) {
         Ptp1588TimingPacket.parseFrom(packet)
       } else {
-        sparkTask.ZeroPtp1588TimingPacket()
+        ZeroPtp1588TimingPacket()
       }
     } catch {
       case e: Exception =>
