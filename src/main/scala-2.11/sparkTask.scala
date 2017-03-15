@@ -29,7 +29,7 @@ object sparkTask {
 
   //  val streamSource = "10.10.10.12"
   //  val sparkMaster = "10.10.10.15"
-  val streamSource = "192.168.0.2"
+  val streamSource = "192.168.1.72"
   val sparkMaster = streamSource
   val sparkPort = "7077"
 

@@ -1,4 +1,4 @@
-import bms_voltage.bms_voltage._
+import bms_voltage._
 //import org.apache.spark.streaming.zeromq.ZeroMQUtils
 //import java.net._
 

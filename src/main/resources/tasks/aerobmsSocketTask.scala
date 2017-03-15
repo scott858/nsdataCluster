@@ -3,7 +3,7 @@ package tasks
 import java.io._
 
 import scala.language.implicitConversions
-import bms_voltage.bms_voltage._
+import bms_voltage._
 
 import scala.collection.mutable.ArrayBuffer
 

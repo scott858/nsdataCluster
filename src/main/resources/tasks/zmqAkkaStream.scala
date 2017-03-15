@@ -2,7 +2,7 @@ package tasks
 
 import akka.util.ByteString
 import akka.zeromq.Subscribe
-import bms_voltage.bms_voltage._
+import bms_voltage._
 import com.datastax.spark.connector.cql.CassandraConnector
 import com.datastax.spark.connector.streaming._
 import org.apache.spark.SparkConf
