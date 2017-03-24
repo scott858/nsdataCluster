@@ -27,10 +27,10 @@ object sparkTask {
   val assemblyPath = "/home/scott/repos/code/nsdataCluster/" +
     "target/scala-2.11/nsdataCluster-assembly-1.0.jar"
 
-  //  val streamSource = "10.10.10.12"
-  //  val sparkMaster = "10.10.10.15"
-  val streamSource = "192.168.1.72"
-  val sparkMaster = streamSource
+  val streamSource = "10.10.10.12"
+  val sparkMaster = "10.10.10.15"
+  //  val streamSource = "192.168.1.72"
+  //  val sparkMaster = streamSource
   val sparkPort = "7077"
 
   def receiveTest() {
@@ -73,6 +73,7 @@ object sparkTask {
       .set("spark.cassandra.connection.host", sparkMaster)
       .set("spark.cassandra.output.consistency.level", "ONE")
       .set("spark.cleaner.ttl", "3600")
+      .set("spark.cores.max", "18")
 
     val cc = com.datastax.spark.connector.cql.CassandraConnector(conf)
 
@@ -229,7 +230,7 @@ object sparkTask {
         "slave_to_master_delay_s int, " +
         "slave_to_master_delay_ns int, " +
         "port_state int, " +
-        "primary key((experiment_id, mac_address, time_bucket), delay_request_receive_s, delay_request_receive_ns));")
+        "primary key((experiment_id, time_bucket), mac_address, delay_request_receive_s, delay_request_receive_ns));")
     }
   }
 

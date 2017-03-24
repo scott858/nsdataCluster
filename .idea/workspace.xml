@@ -1,63 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53449102-6267-466f-b879-b187b0712602" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$3f31ddaacf410b82913e$$anonfun$$sbtdef$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$3f31ddaacf410b82913e$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$3f31ddaacf410b82913e.cache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$3f31ddaacf410b82913e.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$875e301497210cc4744c$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$875e301497210cc4744c.cache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$875e301497210cc4744c.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$9910fb330cb15a502096$$anonfun$$sbtdef$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$9910fb330cb15a502096$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$9910fb330cb15a502096.cache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$9910fb330cb15a502096.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$c659a70ee8201daadbbd$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$c659a70ee8201daadbbd.cache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$c659a70ee8201daadbbd.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$f34e4b2e37641dda10ec$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$f34e4b2e37641dda10ec.cache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/project/target/config-classes/$f34e4b2e37641dda10ec.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__aopalliance_aopalliance_1_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__aopalliance_aopalliance_1_0_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_datastax_cassandra_cassandra_driver_core_3_1_3_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_datastax_cassandra_cassandra_driver_core_3_1_3_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_datastax_spark_spark_cassandra_connector_2_11_2_0_0_M2_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_datastax_spark_spark_cassandra_connector_2_11_2_0_0_M2_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_github_nscala_time_nscala_time_2_11_2_16_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_github_nscala_time_nscala_time_2_11_2_16_0_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_google_code_findbugs_jsr305_1_3_9_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_google_code_findbugs_jsr305_1_3_9_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_mdialog_scala_zeromq_2_11_1_1_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_mdialog_scala_zeromq_2_11_1_1_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_thoughtworks_paranamer_paranamer_2_6_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_thoughtworks_paranamer_paranamer_2_6_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_actor_2_11_2_3_2_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_actor_2_11_2_3_2_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_config_1_2_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_config_1_2_0_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__commons_codec_commons_codec_1_10_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__commons_codec_commons_codec_1_10_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__commons_collections_commons_collections_3_2_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__commons_collections_commons_collections_3_2_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__commons_net_commons_net_3_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__commons_net_commons_net_3_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__io_netty_netty_3_8_0_Final_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__io_netty_netty_3_8_0_Final_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__javax_inject_javax_inject_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__javax_inject_javax_inject_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__javax_validation_validation_api_1_1_0_Final_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__javax_validation_validation_api_1_1_0_Final_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__joda_time_joda_time_2_9_7_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__joda_time_joda_time_2_9_7_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_avro_avro_1_7_7_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_avro_avro_1_7_7_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_cassandra_cassandra_clientutil_3_9_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_cassandra_cassandra_clientutil_3_9_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_cassandra_cassandra_thrift_3_9_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_cassandra_cassandra_thrift_3_9_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_commons_commons_compress_1_4_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_commons_commons_compress_1_4_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_streaming_2_11_2_1_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_streaming_2_11_2_1_0_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_codehaus_jackson_jackson_core_asl_1_9_13_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_codehaus_jackson_jackson_core_asl_1_9_13_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_codehaus_jackson_jackson_mapper_asl_1_9_13_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_codehaus_jackson_jackson_mapper_asl_1_9_13_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_javassist_javassist_3_18_1_GA_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_javassist_javassist_3_18_1_GA_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_parser_combinators_2_11_1_0_1_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_parser_combinators_2_11_1_0_1_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_xml_2_11_1_0_2_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_xml_2_11_1_0_2_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_11_8_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_11_8_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_reflect_2_11_8_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_reflect_2_11_8_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalatest_scalatest_2_11_2_2_6_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalatest_scalatest_2_11_2_2_6_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_jcl_over_slf4j_1_7_16_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_jcl_over_slf4j_1_7_16_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_jul_to_slf4j_1_7_16_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_jul_to_slf4j_1_7_16_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_slf4j_api_1_7_16_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_slf4j_slf4j_api_1_7_16_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_tukaani_xz_1_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_tukaani_xz_1_0_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_zeromq_jeromq_0_3_5_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_zeromq_jeromq_0_3_5_jar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/app-build.iml" afterPath="$PROJECT_DIR$/.idea/modules/app-build.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/app.iml" afterPath="$PROJECT_DIR$/.idea/modules/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="53449102-6267-466f-b879-b187b0712602" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -107,19 +51,70 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="sparkTask.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sparkTask.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/sparkTask.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-522">
-              <caret line="295" column="8" lean-forward="false" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="8" />
+            <state relative-caret-position="846">
+              <caret line="157" column="17" lean-forward="false" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
               <folding>
-                <element signature="e#0#16#0" expanded="true" />
+                <element signature="e#1058#1878#0" expanded="false" />
+                <element signature="e#1289#1644#0" expanded="false" />
+                <element signature="e#1389#1614#0" expanded="false" />
+                <element signature="e#1435#1539#0" expanded="false" />
+                <element signature="e#2595#3142#0" expanded="false" />
+                <element signature="e#3146#4482#0" expanded="false" />
+                <element signature="e#3238#3434#0" expanded="false" />
+                <element signature="e#3272#3428#0" expanded="false" />
+                <element signature="e#3509#3542#0" expanded="false" />
+                <element signature="e#3802#4053#0" expanded="false" />
+                <element signature="e#3836#4047#0" expanded="false" />
+                <element signature="e#4076#4477#0" expanded="false" />
+                <element signature="e#4110#4471#0" expanded="false" />
+                <element signature="e#4671#5066#0" expanded="false" />
+                <element signature="e#4791#5062#0" expanded="false" />
+                <element signature="e#5070#5416#0" expanded="false" />
+                <element signature="e#5195#5251#0" expanded="false" />
+                <element signature="e#5257#5301#0" expanded="false" />
+                <element signature="e#5420#5507#0" expanded="false" />
+                <element signature="e#5511#5665#0" expanded="false" />
+                <element signature="e#5593#5661#0" expanded="false" />
+                <element signature="e#5794#5950#0" expanded="false" />
+                <element signature="e#7529#8069#0" expanded="false" />
+                <element signature="e#9153#10260#0" expanded="false" />
+                <element signature="e#9269#10256#0" expanded="false" />
+                <element signature="e#10264#10605#0" expanded="false" />
+                <element signature="e#10387#10442#0" expanded="false" />
+                <element signature="e#10448#10491#0" expanded="false" />
+                <element signature="e#10609#10693#0" expanded="false" />
+                <element signature="e#10697#10817#0" expanded="false" />
+                <element signature="e#10776#10813#0" expanded="false" />
+                <element signature="e#10821#11261#0" expanded="false" />
+                <element signature="e#11265#11568#0" expanded="false" />
+                <element signature="e#11369#11415#0" expanded="false" />
+                <element signature="e#11421#11459#0" expanded="false" />
+                <element signature="e#11572#12022#0" expanded="false" />
+                <element signature="e#11627#12018#0" expanded="false" />
+                <element signature="e#12026#12477#0" expanded="false" />
+                <element signature="e#12082#12473#0" expanded="false" />
+                <element signature="e#12481#13677#0" expanded="false" />
+                <element signature="e#12562#12754#0" expanded="false" />
+                <element signature="e#12596#12748#0" expanded="false" />
+                <element signature="e#12841#12931#0" expanded="false" />
+                <element signature="e#12874#12925#0" expanded="false" />
+                <element signature="e#12954#13673#0" expanded="false" />
+                <element signature="e#12988#13667#0" expanded="false" />
+                <element signature="e#13681#13827#0" expanded="false" />
+                <element signature="e#13941#14124#0" expanded="false" />
+                <element signature="e#14052#14112#0" expanded="false" />
+                <element signature="e#14060#14106#0" expanded="false" />
+                <element signature="e#14128#14276#0" expanded="false" />
+                <element signature="e#14147#14209#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.sbt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build.sbt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.sbt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
@@ -185,11 +180,11 @@
         <option value="$PROJECT_DIR$/src/main/resources/pythonlib/spark_client.py" />
         <option value="$PROJECT_DIR$/src/main/resources/tasks/zmqStreamTask.scala" />
         <option value="$PROJECT_DIR$/project/plugins.sbt" />
-        <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/protobuf/timing_packets.proto" />
         <option value="$PROJECT_DIR$/src/main/protobuf/aero_network.proto" />
         <option value="$PROJECT_DIR$/target/scala-2.11/src_managed/main/bms_voltage/bms_voltage/BmsVoltage.scala" />
         <option value="$PROJECT_DIR$/src/main/scala-2.11/sockets/client.scala" />
+        <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/scala-2.11/sparkTask.scala" />
       </list>
     </option>
@@ -211,9 +206,9 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
+    <option name="x" value="1312" />
     <option name="y" value="52" />
-    <option name="width" value="1228" />
+    <option name="width" value="1248" />
     <option name="height" value="1548" />
   </component>
   <component name="ProjectView">
@@ -231,7 +226,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -323,7 +318,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -332,11 +327,11 @@
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nsdataClusterUI" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nsdataClusterWebSocketServer" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -358,7 +353,7 @@
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="SBT Task.compile">
+  <component name="RunManager" selected="SBT Task.assembly">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -747,7 +742,7 @@
     </list>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1489578427328" />
+    <option name="lastUpdateTimestamp" value="1490127328952" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -809,27 +804,31 @@
       <workItem from="1489441858021" duration="732000" />
       <workItem from="1489578381601" duration="8000" />
       <workItem from="1489578405350" duration="211000" />
+      <workItem from="1489582729496" duration="119000" />
+      <workItem from="1490098924262" duration="716000" />
+      <workItem from="1490102501747" duration="1808000" />
+      <workItem from="1490127317983" duration="4862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="159546000" />
+    <option name="totallyTimeSpent" value="167051000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="52" width="1228" height="1548" extended-state="4" />
-    <editor active="true" />
+    <frame x="1312" y="52" width="1248" height="1548" extended-state="4" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35034484" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17727272" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17641996" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30647382" sideWeight="0.5058236" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994923" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2937931" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2937931" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6068966" sideWeight="0.49417636" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20896785" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2046589" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1071,19 +1070,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/sparkTask.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-522">
-          <caret line="295" column="8" lean-forward="false" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1092,6 +1078,67 @@
         <state relative-caret-position="288">
           <caret line="16" column="43" lean-forward="false" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala-2.11/sparkTask.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="846">
+          <caret line="157" column="17" lean-forward="false" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
+          <folding>
+            <element signature="e#1058#1878#0" expanded="false" />
+            <element signature="e#1289#1644#0" expanded="false" />
+            <element signature="e#1389#1614#0" expanded="false" />
+            <element signature="e#1435#1539#0" expanded="false" />
+            <element signature="e#2595#3142#0" expanded="false" />
+            <element signature="e#3146#4482#0" expanded="false" />
+            <element signature="e#3238#3434#0" expanded="false" />
+            <element signature="e#3272#3428#0" expanded="false" />
+            <element signature="e#3509#3542#0" expanded="false" />
+            <element signature="e#3802#4053#0" expanded="false" />
+            <element signature="e#3836#4047#0" expanded="false" />
+            <element signature="e#4076#4477#0" expanded="false" />
+            <element signature="e#4110#4471#0" expanded="false" />
+            <element signature="e#4671#5066#0" expanded="false" />
+            <element signature="e#4791#5062#0" expanded="false" />
+            <element signature="e#5070#5416#0" expanded="false" />
+            <element signature="e#5195#5251#0" expanded="false" />
+            <element signature="e#5257#5301#0" expanded="false" />
+            <element signature="e#5420#5507#0" expanded="false" />
+            <element signature="e#5511#5665#0" expanded="false" />
+            <element signature="e#5593#5661#0" expanded="false" />
+            <element signature="e#5794#5950#0" expanded="false" />
+            <element signature="e#7529#8069#0" expanded="false" />
+            <element signature="e#9153#10260#0" expanded="false" />
+            <element signature="e#9269#10256#0" expanded="false" />
+            <element signature="e#10264#10605#0" expanded="false" />
+            <element signature="e#10387#10442#0" expanded="false" />
+            <element signature="e#10448#10491#0" expanded="false" />
+            <element signature="e#10609#10693#0" expanded="false" />
+            <element signature="e#10697#10817#0" expanded="false" />
+            <element signature="e#10776#10813#0" expanded="false" />
+            <element signature="e#10821#11261#0" expanded="false" />
+            <element signature="e#11265#11568#0" expanded="false" />
+            <element signature="e#11369#11415#0" expanded="false" />
+            <element signature="e#11421#11459#0" expanded="false" />
+            <element signature="e#11572#12022#0" expanded="false" />
+            <element signature="e#11627#12018#0" expanded="false" />
+            <element signature="e#12026#12477#0" expanded="false" />
+            <element signature="e#12082#12473#0" expanded="false" />
+            <element signature="e#12481#13677#0" expanded="false" />
+            <element signature="e#12562#12754#0" expanded="false" />
+            <element signature="e#12596#12748#0" expanded="false" />
+            <element signature="e#12841#12931#0" expanded="false" />
+            <element signature="e#12874#12925#0" expanded="false" />
+            <element signature="e#12954#13673#0" expanded="false" />
+            <element signature="e#12988#13667#0" expanded="false" />
+            <element signature="e#13681#13827#0" expanded="false" />
+            <element signature="e#13941#14124#0" expanded="false" />
+            <element signature="e#14052#14112#0" expanded="false" />
+            <element signature="e#14060#14106#0" expanded="false" />
+            <element signature="e#14128#14276#0" expanded="false" />
+            <element signature="e#14147#14209#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1124,7 +1171,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Python 2.7.11 (/anaconda2.7/envs/ns_device_server/bin/python) interpreter library</last-edited>
+          <last-edited>Python 3.5.2 virtualenv at ~/.virtualenvs/envs/py3.5 interpreter library</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1136,7 +1183,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>BugVM SDK 1.0.9</last-edited>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
